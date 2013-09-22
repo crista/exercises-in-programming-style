@@ -8,5 +8,6 @@ Constraints:
 
 Possible names:
 
+- Candy factory
 - Functional
 - Pipeline

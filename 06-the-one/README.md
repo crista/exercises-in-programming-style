@@ -13,6 +13,7 @@ Constraints:
 
 Possible names:
 
+- The One
 - Monadic
 - The wrapper of all things
 - Imperative functional style

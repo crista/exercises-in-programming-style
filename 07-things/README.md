@@ -15,5 +15,6 @@ Constraints:
 
 Possible names:
 
+- Things
 - Object-oriented style
 - The Kingdom of Nouns
