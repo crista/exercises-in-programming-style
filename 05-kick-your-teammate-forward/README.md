@@ -10,6 +10,6 @@ Variation of style #4, with the following additional constraints:
 
 Possible names:
 
-- Shoot your teammate forward!
+- Kick your teammate forward!
 - Continuation-passing style
 - Crochet loop
