@@ -17,4 +17,4 @@ Possible names:
 
 - Things
 - Object-oriented style
-- The Kingdom of Nouns
+- The Kingdom of Nouns (http://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html)

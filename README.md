@@ -11,7 +11,7 @@ You can contribute:
 - new names for the existing styles
 - discussion of names, pros and cons of each style
 
-Please follow the conventions suggested by the existing code base
+Please follow the conventions suggested by the existing code base,
 specifically:
 
 - If you are contributing a program in a different programming language,
