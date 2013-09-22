@@ -1,11 +1,12 @@
-Style #1 Monolithic
+Style #1 
 ==============================
 
 Constraints:
 
 - No abstractions
 
-Alternative names of this style:
+Possible names:
 
+- Monolith
 - Labyrinth
 - Brain dump
