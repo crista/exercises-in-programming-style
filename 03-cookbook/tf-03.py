@@ -1,0 +1,89 @@
+import sys, string
+
+# The shared mutable data
+data = []
+words = []
+word_freqs = []
+
+#
+# The functions
+#
+def read_file(path_to_file):
+    """
+    Takes a path to a file and assigns the entire
+    contents of the file to the global variable data
+    """
+    global data
+    f = open(path_to_file)
+    data = data + list(f.read())
+    f.close()
+
+def filter_chars_and_normalize():
+    """
+    Replaces all nonalphanumeric chars in data with white space
+    """
+    global data
+    for i in range(len(data)):
+        if not data[i].isalnum():
+            data[i] = ' '
+        else:
+            data[i] = data[i].lower()
+
+def scan():
+    """
+    Scans data for words, filling the global variable words
+    """
+    global data
+    global words
+    data_str = ''.join(data)
+    words = words + data_str.split()
+
+def remove_stop_words():
+    global words
+    f = open('../stop_words.txt')
+    stop_words = f.read().split(',')
+    f.close()
+    # add single-letter words
+    stop_words.extend(list(string.ascii_lowercase))
+    indeces = []
+    for i in range(len(words)):
+        if words[i] in stop_words:
+            indeces.append(i)
+    for i in reversed(indeces):
+        words.pop(i)
+
+def frequencies():
+    """
+    Creates a list of pairs associating
+    words with frequencies 
+    """
+    global words
+    global word_freqs
+    for w in words:
+        keys = [wd[0] for wd in word_freqs]
+        if w in keys:
+            word_freqs[keys.index(w)][1] += 1
+        else:
+            word_freqs.append([w, 1])
+
+def sort():
+    """
+    Sorts word_freqs by frequency
+    """
+    global word_freqs
+    word_freqs.sort(lambda x, y: cmp(y[1], x[1]))
+
+
+#
+# The main function
+#
+read_file(sys.argv[1])
+filter_chars_and_normalize()
+scan()
+remove_stop_words()
+frequencies()
+sort()
+
+for tf in word_freqs[0:25]:
+    print tf[0], ' - ', tf[1]
+
