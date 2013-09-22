@@ -1,4 +1,4 @@
-exercises-in-programming-style
+Style #1 Monolithic
 ==============================
 
 Constraints:
