@@ -32,7 +32,10 @@ should not be here)
 Contributions of new names and discussion should be done under Issues
 or on the Wiki part of this repo.
 
+Never stop exercising!
+
 Love,
 Crista
 
-P.S. Never stop exercising!
+P.S. Inspiration for this collection: http://en.wikipedia.org/wiki/Exercises_in_Style
+
