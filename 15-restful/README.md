@@ -26,7 +26,7 @@ Additionally, the networked style has the following contraints, not shown here:
 
 - Layered system
 
-- Code-on-demans
+- Code-on-demand
 
 Possible names:
 
