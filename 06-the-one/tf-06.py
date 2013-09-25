@@ -12,7 +12,7 @@ class TFTheOne:
         return TFTheOne(result)
 
 def printm(monad):
-    print monad._value
+    print monad._value,
 
 #
 # The functions
