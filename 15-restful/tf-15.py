@@ -86,6 +86,7 @@ def handle_request(verb, uri, args):
 # A very simple client "browser"
 def render_and_get_input(state_representation, links):
     print state_representation
+    sys.stdout.flush()
     if type(links) is dict: # many possible next states
         input = sys.stdin.readline().strip()
         if input in links:
