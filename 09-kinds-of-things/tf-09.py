@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import abc, sys, re, operator, string
 
 #

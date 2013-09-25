@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys, re, operator, string
 from abc import ABCMeta
 
