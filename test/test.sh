@@ -4,9 +4,12 @@ function msg() {
     echo $(date +%T) "$@"
 }
 
+# Move to a predictable place.
+cd $(dirname $0)
+
 failures=0
 total=0
-mydir=$(cd $(dirname $0); pwd)
+mydir=$(pwd)
 files=$(echo *.txt)
 for dir in ../[0-9][0-9]-* ; do
     cd $dir
