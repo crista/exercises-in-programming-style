@@ -11,17 +11,20 @@ files=$(echo *.txt)
 for dir in ../[0-9][0-9]-* ; do
     cd $dir
     for file in $files ; do
-        exe=$(echo tf-[0-9][0-9].py)
-        msg testing $(basename $dir)/$exe with $file
-        python $exe ../$file | diff -b - $mydir/$file
-        result=$?
-        total=$((total+1))
-        if [ $result -ne 0 ]; then
-            failures=$(($failures+1))
-            msg FAILED!
-        else
-            msg passed.
-        fi
+        for exe in * ; do
+            if [ -x $exe ]; then
+                msg testing $(basename $dir)/$exe with $file
+                ./$exe ../$file | diff -b - $mydir/$file
+                result=$?
+                total=$((total+1))
+                if [ $result -ne 0 ]; then
+                    failures=$(($failures+1))
+                    msg FAILED!
+                else
+                    msg passed.
+                fi
+            fi
+        done
     done
     cd $mydir
 done

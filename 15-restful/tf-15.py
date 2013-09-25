@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import re, string, sys
 
 with open("../stop_words.txt") as f:

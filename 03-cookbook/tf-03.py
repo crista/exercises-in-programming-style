@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys, string
 
 # The shared mutable data

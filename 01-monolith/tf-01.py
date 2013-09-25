@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys, string
 # the global list of [word, frequency] pairs
 word_freqs = []
