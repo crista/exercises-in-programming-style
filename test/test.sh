@@ -4,11 +4,21 @@ function msg() {
     echo $(date +%T) "$@"
 }
 
+# Move to a predictable place.
+cd $(dirname $0)
+
 failures=0
 total=0
-mydir=$(cd $(dirname $0); pwd)
+mydir=$(pwd)
+if [ -z "$1" ]; then
+    styles_to_test=$(echo ../[0-9][0-9]-*)
+else
+    styles_to_test=../$1-*
+fi
+
 files=$(echo *.txt)
-for dir in ../[0-9][0-9]-* ; do
+
+for dir in $styles_to_test ; do
     cd $dir
     for file in $files ; do
         for exe in * ; do
