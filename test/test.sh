@@ -24,12 +24,19 @@ for dir in $styles_to_test ; do
         for exe in * ; do
             if [ -x $exe ]; then
                 msg testing $(basename $dir)/$exe with $file
-                ./$exe ../$file | diff -b - $mydir/$file
+                expected=$mydir/$file
+                actual=$(./$exe ../$file)
+                echo "$actual" | diff -b $expected - > /dev/null
                 result=$?
                 total=$((total+1))
                 if [ $result -ne 0 ]; then
+                    echo 
+                    echo "    Expected            Actual"
+                    echo "-----------------  -----------------"
+                    echo "$actual" | paste $expected - | column -t
+                    echo 
                     failures=$(($failures+1))
-                    msg FAILED!
+                    msg $exe FAILED!
                 else
                     msg passed.
                 fi
