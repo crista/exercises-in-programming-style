@@ -1,12 +1,14 @@
 Exercises in Programming Style
 ==============================
 
-Comprehensive collection of well-known, and not so well-known, programming styles using a simple computational task, term frequency.
+Comprehensive collection of well-known, and not so well-known, programming
+styles using a simple computational task, term frequency.
 
 Additions are welcome! 
 
 You can contribute: 
-- an example program that follows one of the existing styles, but written in a different programming language 
+- an example program that follows one of the existing styles, but written in a
+  different programming language 
 - an entirely new programming style
 - new names for the existing styles
 - discussion of names, pros and cons of each style
