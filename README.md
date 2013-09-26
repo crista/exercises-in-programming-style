@@ -34,6 +34,14 @@ should not be here)
 Contributions of new names and discussion should be done under Issues
 or on the Wiki part of this repo.
 
+To test your work, make sure your script is executable and then run:
+
+```
+./test/test.sh NN
+```
+
+Where `NN` is the number prefix of the directory you're adding.
+
 Never stop exercising!
 
 Love,
