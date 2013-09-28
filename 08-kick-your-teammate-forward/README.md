@@ -1,7 +1,7 @@
-Style #5
+Style #8
 ==============================
 
-Variation of style #4, with the following additional constraints:
+Variation of the candy factory style, with the following additional constraints:
 
 - Each function takes an additional parameter, usually the last, which is another function
 - That function parameter is applied at the end of the current function
