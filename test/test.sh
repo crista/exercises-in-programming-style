@@ -33,7 +33,7 @@ for dir in $styles_to_test ; do
 				if [ -e $dir/autorun ] ; then
 					actual=$(./$exe <autorun | grep \# | awk '{print $2,$3,$4}')
 				else
-                	actual=$(./$exe ../$file)
+                	actual=$(./$exe ../$file | grep -)
 				fi
 				test_end=$(date +"%s")
                 echo "$actual" | diff -b $expected - > /dev/null
