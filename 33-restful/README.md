@@ -1,4 +1,4 @@
-Style #15
+Style #33
 ==============================
 
 REST = REpresentational State Transfer (http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm)
