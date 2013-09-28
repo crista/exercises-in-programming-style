@@ -1,7 +1,11 @@
 #!/bin/bash
 
 function msg() {
-    echo $(date +%T) "$@"
+    echo "$@"
+}
+
+function date_diff() {
+	date -u -d @"$(($2 - $1))" +"%-Hh %-Mm %-Ss"
 }
 
 # Move to a predictable place.
@@ -17,15 +21,17 @@ else
 fi
 
 files=$(echo *.txt)
-
+suite_start=$(date +"%s")
 for dir in $styles_to_test ; do
     cd $dir
     for file in $files ; do
         for exe in * ; do
             if [ -x $exe ]; then
-                msg testing $(basename $dir)/$exe with $file
+                msg $(date +%T) testing $(basename $dir)/$exe with $file
                 expected=$mydir/$file
+				test_start=$(date +"%s")
                 actual=$(./$exe ../$file)
+				test_end=$(date +"%s")
                 echo "$actual" | diff -b $expected - > /dev/null
                 result=$?
                 total=$((total+1))
@@ -36,17 +42,18 @@ for dir in $styles_to_test ; do
                     echo "$actual" | paste $expected - | column -t
                     echo 
                     failures=$(($failures+1))
-                    msg $exe FAILED!
+                    msg $exe FAILED in $(date_diff $test_start $test_end)!
                 else
-                    msg passed.
+                    msg $exe passed in $(date_diff $test_start $test_end).
                 fi
             fi
         done
     done
     cd $mydir
 done
+suite_end=$(date +"%s")
 
-msg $(date +%T) Ran $total tests with $failures failures.
+msg Ran $total tests with $failures failures in $(date_diff $suite_start $suite_end).
 if [ $failures -ne 0 ]; then
     msg FAILED!
     exit $failures
