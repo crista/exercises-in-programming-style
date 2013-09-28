@@ -30,7 +30,11 @@ for dir in $styles_to_test ; do
                 msg $(date +%T) testing $(basename $dir)/$exe with $file
                 expected=$mydir/$file
 				test_start=$(date +"%s")
-                actual=$(./$exe ../$file)
+				if [ -e $dir/autorun ] ; then
+					actual=$(./$exe <autorun | grep \# | awk '{print $2,$3,$4}')
+				else
+                	actual=$(./$exe ../$file)
+				fi
 				test_end=$(date +"%s")
                 echo "$actual" | diff -b $expected - > /dev/null
                 result=$?
