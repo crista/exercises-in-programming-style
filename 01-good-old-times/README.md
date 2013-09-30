@@ -15,5 +15,5 @@ Possible names:
 - Good old times
 - Early 50s style
 
-NOTE: this example progrma takes a good 5-10 minutes to run over 
+NOTE: this example program takes a good 5-10 minutes to run over 
 Pride and Prejudice
