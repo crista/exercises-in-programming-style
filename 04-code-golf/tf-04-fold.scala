@@ -1,5 +1,5 @@
 /**
-Attempt to speed up execution time: Avg 4.3 seconds
+Attempt to speed up execution time: Avg 4.4 seconds
 1. Use a compiled regex
 2. accumulate tokens using a catamorphism
 
