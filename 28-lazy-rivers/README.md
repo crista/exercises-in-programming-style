@@ -8,7 +8,7 @@ Constraints:
 
 Possible names:
 
-- Lazy river
+- Lazy rivers
 - Data streams
 - Dataflow
 - Data generators
