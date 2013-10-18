@@ -59,3 +59,17 @@ def cls():
     os.system(['clear','cls'][os.name == 'nt'])
 
 
+interactive = True
+def get_input():
+    global interactive
+    if not interactive:
+        return True
+
+    while True: 
+        key = ord(getch())
+        if key == 32: # space bar
+            return True
+        elif key == 27: # ESC
+            interactive = False
+            return True
+

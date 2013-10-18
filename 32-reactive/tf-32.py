@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import sys, operator, string, os, threading
-from util import getch, cls
+from util import getch, cls, get_input
 from time import sleep
 
 lock = threading.Lock()
@@ -29,7 +29,7 @@ class FreqObserver(threading.Thread):
             self._freqs_0 = freqs_1
             sleep(0.01)
 
-    def stop():
+    def stop(self):
         self._end = True
 
     def _update_display(self, tuples):
@@ -47,21 +47,6 @@ class FreqObserver(threading.Thread):
 #
 # The active part, dataflow-like
 #
-interactive = True
-def get_input():
-    global interactive
-    if not interactive:
-        return True
-
-    while True: 
-        key = ord(getch())
-        if key == 32: # space bar
-            return True
-        elif key == 27: # ESC
-            interactive = False
-            return True
-        else: pass
-
 def characters():
     c = f.read(1)
     if c != "":
@@ -104,6 +89,8 @@ def count_and_sort():
     freqs = {}
     # The declaration for reactive observation of freqs
     observer = FreqObserver(freqs)
+    # Let's get input from the user, or let her
+    # feed the input automatically
     while get_input():
         try:
             w = non_stop_words().next()
@@ -112,6 +99,7 @@ def count_and_sort():
             lock.release()
         except StopIteration:
             # Let's wait for the observer thread to die gracefully
+            observer.stop()
             sleep(1)
             break
 
