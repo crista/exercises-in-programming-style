@@ -39,10 +39,10 @@ class FreqObserver(threading.Thread):
 #
 # The active part, dataflow-like
 #
-automatic = False
+interactive = True
 def get_input():
-    global automatic
-    if automatic:
+    global interactive
+    if not interactive:
         return True
 
     while True: 
@@ -50,7 +50,7 @@ def get_input():
         if key == 32: # space bar
             return True
         elif key == 27: # ESC
-            automatic = True
+            interactive = False
             return True
         else: pass
 
