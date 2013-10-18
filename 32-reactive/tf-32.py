@@ -4,6 +4,8 @@ import sys, operator, string, os, threading
 from util import getch, cls
 from time import sleep
 
+lock = threading.Lock()
+
 #
 # The reactive infrastructure
 #
@@ -11,18 +13,24 @@ class FreqObserver(threading.Thread):
     def __init__(self, freqs):
         threading.Thread.__init__(self)
         self.daemon = True
+        self._end = False
         # freqs is the data to be observed and reacted to
         self._freqs = freqs
         self._freqs_0 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
         self.start()
 
     def run(self):
-        while True:
+        while not self._end:
+            lock.acquire()
             freqs_1 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+            lock.release()
             if (freqs_1[0:25] != self._freqs_0[0:25]):
                 self._update_display(freqs_1[0:25])
             self._freqs_0 = freqs_1
             sleep(0.01)
+
+    def stop():
+        self._end = True
 
     def _update_display(self, tuples):
         def refresh_screen(data):
@@ -54,21 +62,19 @@ def get_input():
             return True
         else: pass
 
-f = open(sys.argv[1])
-
-def characters(filename):
+def characters():
     c = f.read(1)
     if c != "":
         yield c
     else:
         raise StopIteration()
 
-def all_words(filename):
+def all_words():
     found_word = False
     start_char = True
     while not found_word:
         try:
-            c = characters(filename).next()
+            c = characters().next()
         except StopIteration:
             raise StopIteration()
 
@@ -87,22 +93,26 @@ def all_words(filename):
                 found_word = True
                 yield word
 
-def non_stop_words(filename):
+def non_stop_words():
     stopwords = set(open('../stop_words.txt').read().split(',')  + list(string.ascii_lowercase))
     while True:
-        w = all_words(filename).next()
+        w = all_words().next()
         if not w in stopwords:
             yield w
 
-def count_and_sort(filename):
+def count_and_sort():
     freqs = {}
     # The declaration for reactive observation of freqs
-    FreqObserver(freqs)
+    observer = FreqObserver(freqs)
     while get_input():
         try:
-            w = non_stop_words(filename).next()
+            w = non_stop_words().next()
+            lock.acquire()
             freqs[w] = 1 if w not in freqs else freqs[w]+1
+            lock.release()
         except StopIteration:
+            # Let's wait for the observer thread to die gracefully
+            sleep(1)
             break
 
 #
@@ -110,6 +120,6 @@ def count_and_sort(filename):
 #
 print "Press space bar to fetch words from the file one by one"
 print "Press ESC to switch to automatic mode"
-count_and_sort(sys.argv[1])
-
+with open(sys.argv[1])as f:
+    count_and_sort()
 
