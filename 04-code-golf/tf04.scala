@@ -30,9 +30,14 @@
 real  0m5.237s
 
 */
-object tf04a extends App {
+object tf04 extends App {
   def l(f:String) = io.Source.fromFile(f).getLines.mkString(",")
   val s = l("../stop_words.txt").split(",") ++ (1 to 26).map(i=>String.valueOf(Character.toChars(96+i)))
-  val w = l(args(0)).split("[^a-zA-Z]+").filter(x => !s.contains(x.toLowerCase))
-  w.distinct.map(u=> (u,w.count(_==u))).sortBy(-_._2).take(25).foreach(println)
+
+  l(args(0)).split("[^a-zA-Z]+").filter(x => !s.contains(x.toLowerCase))
+  .distinct
+  .map(u=> (u,l(args(0)).split("[^a-zA-Z]+").filter(x => !s.contains(x.toLowerCase)).count(_==u)))
+  .sortBy(-_._2)
+  .take(25)
+  .foreach(println)
 }
