@@ -5,37 +5,40 @@ import sys, re, operator, collections
 #
 # Model
 #
-class WordFrequencies:
+class WordFrequenciesModel:
     """ Models the data. In this case, we're only interested 
     in words and their frequencies as an end result """
-    _freqs = {}
+    freqs = {}
     def __init__(self, path_to_file):
         stopwords = set(open('../stop_words.txt').read().split(','))
         words = re.findall('[a-z]{2,}', open(path_to_file).read().lower())
-        self._freqs = collections.Counter(w for w in words if w not in stopwords)
+        self.freqs = collections.Counter(w for w in words if w not in stopwords)
 
-    def word_freqs_sorted(self):
-        """
-        Returns the list of the most frequently-occuring words, sorted
-        """
-        return sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
 
 #
 # View
 #
 class WordFrequenciesView:
-    _freqs = None
-
-    def __init__(self, freqs):
-        self._freqs = freqs
+    def __init__(self, model):
+        self._model = model
 
     def render(self):
-        for (w, c) in self._freqs.word_freqs_sorted()[:25]:
+        sorted_freqs = sorted(self._model.freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        for (w, c) in sorted_freqs[:25]:
             print w, '-', c
 
 #
 # Controller
 #
-wfmodel = WordFrequencies(sys.argv[1])
-wfview = WordFrequenciesView(wfmodel)
-wfview.render()
+class WordFrequencyController:
+    def __init__(self, model, view):
+        self._model = model
+        self._view = view
+        view.render()
+
+#
+# Main
+#
+m = WordFrequenciesModel(sys.argv[1])
+v = WordFrequenciesView(m)
+c = WordFrequencyController(m, v)
