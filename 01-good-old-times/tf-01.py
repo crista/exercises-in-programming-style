@@ -41,7 +41,7 @@ data.append('')    # data[5] is the word
 data.append('')    # data[6] is word,NNNN from the word_freqs file, and then just the word
 data.append(0)     # data[7] is frequency
 
-word_freqs = touchopen('word_freqs', 'r+')
+word_freqs = touchopen('word_freqs', 'rb+')
 f = open(sys.argv[1])
 while True:
     data[1] = [f.readline()] 
@@ -78,9 +78,8 @@ while True:
                             break
 
                     if not data[4]:
+                        word_freqs.seek(0, 1) # Not needed in Unix, needed in Windows
                         word_freqs.writelines("%20s,%04d\n" % (data[5], 1))
-                        if data[5] == 'i, n':
-                            print "Got it " + str(data[1])
                     else:
                         word_freqs.seek(-26, 1)
                         word_freqs.writelines("%20s,%04d\n" % (data[5], data[7]))
