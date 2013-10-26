@@ -97,20 +97,19 @@ def sort():
     """
     word_freq = stack.pop()
     # Not in style, left as exercise
-    return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    stack.append(sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True))
 
 
 #
 # The main function
 #
 stack.append(sys.argv[1])
-read_file()
-filter_chars()
-scan()
-remove_stop_words()
-frequencies()
-word_freqs = sort()
+read_file(); filter_chars(); scan(); remove_stop_words()
+frequencies(); sort()
 
-for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+word_freqs = stack.pop()
+for i in range(0, 25):
+    stack.append(word_freqs[i])
+    print stack[0][0], ' - ', stack[0][1]
+    stack.pop()
 
