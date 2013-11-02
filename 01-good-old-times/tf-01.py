@@ -11,7 +11,7 @@ def touchopen(filename, *args, **kwargs):
     open(filename, "a").close() # "touch" file
     return open(filename, *args, **kwargs)
 
-# The constrained memory, which consists of only 1024 bytes by constraint
+# The constrained memory, which consists of only 1024 cells by constraint
 data = []
 
 # Overall strategy: 
@@ -101,7 +101,6 @@ del data[:]
 data = data + [[]]*(25 - len(data))
 data.append('') # data[25] is word,freq read from word_freqs file, and then word
 data.append(0)  # data[26] is freq
-#print data
 
 while True:
     data[25] = word_freqs.readline().strip()
@@ -112,9 +111,8 @@ while True:
 
     for i in range(25): # elimination of symbol i left as exercise
         if data[i] == [] or data[i][1] < data[26]:
-            #print str(i) + " " + str(data[25]) + " " + str(data[26])
             data.insert(i, [data[25], data[26]]) 
-            del data[26] #  pop the last element
+            del data[26] #  delete the last element
             break
             
 
