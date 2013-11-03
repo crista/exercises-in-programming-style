@@ -111,7 +111,7 @@ while True:
     data[25] = word_freqs.readline().strip()
     if data[25] == '': # EOF
         break
-    data[26] = int(data[25].split(',')[1])
+    data[26] = int(data[25].split(',')[1]) # Read it as integer
     data[25] = data[25].split(',')[0].strip() # word, no white space
     # Check if this word has more counts than the ones in memory
     for i in range(25): # elimination of symbol i left as exercise
