@@ -18,9 +18,8 @@ heap = {}
 #
 def read_file():
     """
-    Takes a path to a file and returns the entire
-    contents of the file as a string.
-    Path to file expected to be on the stack
+    Takes a path to a file on the stack and places the entire
+    contents of the file back on the stack.
     """
     f = open(stack.pop())
     # Push the result onto the stack
@@ -29,9 +28,8 @@ def read_file():
 
 def filter_chars():
     """
-    Takes a string and returns a copy with all nonalphanumeric 
-    chars replaced by white space. The data is assumed to be 
-    on the stack.
+    Takes data on the stack and places back a copy with all 
+    nonalphanumeric chars replaced by white space. 
     """
     # This is not in style. RE is too high-level, but using it
     # for doing this fast and short. Push the pattern onto stack
@@ -41,30 +39,35 @@ def filter_chars():
 
 def scan():
     """
-    Takes a string and scans for words, returning
-    a list of words. The data is assumed to be on the stack.
+    Takes a string on the stack and scans for words, placing
+    the list of words back on the stack
     """
     # Push the result onto the stack.
-    # Again, split() is too high-level for this style, but using it
-    # for doing this fast and short. Left as exercise.
-    stack.append(stack.pop()[0].split())
+    # Again, split() is too high-level for this style, but using
+    # it for doing this fast and short. Left as exercise.
+    stack.extend(stack.pop()[0].split())
 
 def remove_stop_words():
     """ 
-    Takes a list of words and returns a copy with all stop 
-    words removed. The data is assumed to be on the stack.
+    Takes a list of words on the stack and removes
+    all stop words.
     """
     f = open('../stop_words.txt')
     stack.append(f.read().split(','))
     f.close()
     # add single-letter words
-    stack[1].extend(list(string.ascii_lowercase))
+    stack[-1].extend(list(string.ascii_lowercase))
     heap['stop_words'] = stack.pop()
     # Again, this is too high-level for this style, but using it
     # for doing this fast and short. Left as exercise.
-    for w in stack.pop():
-        if w not in heap['stop_words']:
-            stack.append(w)
+    heap['words'] = []
+    while len(stack) > 0:
+        if stack[-1] in heap['stop_words']:
+            stack.pop() # pop it and drop it
+        else:
+            heap['words'].append(stack.pop()) # pop it and store it
+    stack.extend(heap['words']) # Load the words onto the stack
+    del heap['words'] # We don't need this variable anymore
 
 def frequencies():
     """
@@ -84,10 +87,12 @@ def frequencies():
             stack.append(stack.pop() + stack.pop()) # add
         else:
             stack.append(1) # Push 1 in stack[2]
-        heap['word_freqs'][stack.pop()] = stack.pop()  # Load the updated freq back onto the heap
+        # Load the updated freq back onto the heap
+        heap['word_freqs'][stack.pop()] = stack.pop()  
 
     # Push the result onto the stack
     stack.append(heap['word_freqs'])
+    del heap['word_freqs'] # We dont need this variable anymore
 
 def sort():
     """
