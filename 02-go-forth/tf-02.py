@@ -62,7 +62,6 @@ def remove_stop_words():
     heap['stop_words'] = stack.pop()
     # Again, this is too high-level for this style, but using it
     # for doing this fast and short. Left as exercise.
-    #stack.append([w for w in stack.pop() if not w in heap['stop_words']])
     for w in stack.pop():
         if w not in heap['stop_words']:
             stack.append(w)
