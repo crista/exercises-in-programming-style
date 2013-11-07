@@ -62,36 +62,31 @@ def remove_stop_words():
     heap['stop_words'] = stack.pop()
     # Again, this is too high-level for this style, but using it
     # for doing this fast and short. Left as exercise.
-    stack.append([w for w in stack.pop() if not w in heap['stop_words']])
+    #stack.append([w for w in stack.pop() if not w in heap['stop_words']])
+    for w in stack.pop():
+        if w not in heap['stop_words']:
+            stack.append(w)
 
 def frequencies():
     """
     Takes a list of words and returns a dictionary associating
-    words with frequencies of occurrence. The word list is assumed
+    words with frequencies of occurrence. The words are assumed
     to be on the stack.
     """
-    heap['word_list'] = stack.pop()
     heap['word_freqs'] = {}
     # A little flavour of the real Forth style here...
-    stack.append(0) # Counter of words, at stack[0]
-    while stack[-1] != len(heap['word_list']):
-        stack.append(heap['word_list'][stack[-1]]) # Push the word, stack[1]
+    while len(stack) > 0:
         # ... but the following line is not in style, because the naive implementation 
         # would be too slow, or we'd need to implement faster, hash-based search
         if stack[-1] in heap['word_freqs']:
             # Increment the frequency, postfix style: f 1 +
-            stack.append(heap['word_freqs'][stack[1]]) # push the frequency
+            stack.append(heap['word_freqs'][stack[-1]]) # push the frequency
             stack.append(1) # push 1
             stack.append(stack.pop() + stack.pop()) # add
         else:
             stack.append(1) # Push 1 in stack[2]
         heap['word_freqs'][stack.pop()] = stack.pop()  # Load the updated freq back onto the heap
 
-        # Increment the counter, postfix style
-        stack.append(1)
-        stack.append(stack.pop() + stack.pop()) # Add the operands on the stack
-    # Done with iteration. Pop the counter
-    stack.pop()
     # Push the result onto the stack
     stack.append(heap['word_freqs'])
 
