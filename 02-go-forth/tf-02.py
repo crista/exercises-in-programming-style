@@ -73,20 +73,23 @@ def frequencies():
     heap['word_list'] = stack.pop()
     heap['word_freqs'] = {}
     # A little flavour of the real Forth style here...
-    for wi in range(0, len(heap['word_list'])):
-        stack.append(heap['word_list'][wi]) # Push the word, stack[0]
+    stack.append(0) # Counter of words at stack[0]
+    while stack[-1] != len(heap['word_list']):
+        stack.append(heap['word_list'][stack[-1]]) # Push the word, stack[1]
         # ... but the following line is not in style, because the naive implementation 
         # would be too slow, or we'd need to implement faster, hash-based search
-        if stack[0] in heap['word_freqs']:
-            stack.append((heap['word_freqs'][stack[0]], heap['word_freqs'][stack[0]])) # (w, f) in stack[1]
-            stack[1] = (stack[0], stack[1][1] + 1) # Swap the tuple the stack with a new one
-            heap['word_freqs'][stack[-1][0]] = stack[-1][1]  # Load the updated freq back onto the heap
+        if stack[-1] in heap['word_freqs']:
+            stack.append(heap['word_freqs'][stack[1]]) # push the frequency, stack[2]
+            stack[2] = stack[2] + 1 # Swap the tuple the stack with a new one
         else:
-            stack.append((stack[0], 1)) # Push the tuple (w, 1)
-            heap['word_freqs'][stack[-1][0]] = stack[-1][1] # Load it back to the heap
-        stack.pop() # Pop (w, f)
-        stack.pop() # Pop word
+            stack.append(1) # Push 1 in stack[2]
+        heap['word_freqs'][stack.pop()] = stack.pop()  # Load the updated freq back onto the heap
 
+        # Increment the counter
+        stack.append(1)
+        stack.append(stack.pop() + stack.pop()) #Add the operands on the stack
+    # Done with iteration. Pop the counter
+    stack.pop()
     # Push the result onto the stack
     stack.append(heap['word_freqs'])
 
