@@ -8,13 +8,12 @@ import sys, re, operator, string
 stack = []
 
 #
-# The heap. Let's make it an associative array
-# mapping names to data (i.e. variables)
+# The heap. Maps names to data (i.e. variables)
 #
 heap = {}
 
 #
-# The new "words" of our program
+# The new "words" (procedures) of our program
 #
 def read_file():
     """
@@ -42,15 +41,13 @@ def scan():
     Takes a string on the stack and scans for words, placing
     the list of words back on the stack
     """
-    # Push the result onto the stack.
     # Again, split() is too high-level for this style, but using
     # it for doing this fast and short. Left as exercise.
     stack.extend(stack.pop()[0].split())
 
 def remove_stop_words():
     """ 
-    Takes a list of words on the stack and removes
-    all stop words.
+    Takes a list of words on the stack and removes stop words.
     """
     f = open('../stop_words.txt')
     stack.append(f.read().split(','))
@@ -65,24 +62,24 @@ def remove_stop_words():
         if stack[-1] in heap['stop_words']:
             stack.pop() # pop it and drop it
         else:
-            heap['words'].append(stack.pop()) # pop it and store it
+            heap['words'].append(stack.pop()) # pop it, store it
     stack.extend(heap['words']) # Load the words onto the stack
+    del heap['stop_words'] # We don't need this variable anymore
     del heap['words'] # We don't need this variable anymore
 
 def frequencies():
     """
     Takes a list of words and returns a dictionary associating
-    words with frequencies of occurrence. The words are assumed
-    to be on the stack.
+    words with frequencies of occurrence.
     """
     heap['word_freqs'] = {}
     # A little flavour of the real Forth style here...
     while len(stack) > 0:
-        # ... but the following line is not in style, because the naive implementation 
-        # would be too slow, or we'd need to implement faster, hash-based search
+        # ... but the following line is not in style, because the 
+        # naive implementation would be too slow
         if stack[-1] in heap['word_freqs']:
             # Increment the frequency, postfix style: f 1 +
-            stack.append(heap['word_freqs'][stack[-1]]) # push the frequency
+            stack.append(heap['word_freqs'][stack[-1]]) # push f
             stack.append(1) # push 1
             stack.append(stack.pop() + stack.pop()) # add
         else:
@@ -95,14 +92,8 @@ def frequencies():
     del heap['word_freqs'] # We dont need this variable anymore
 
 def sort():
-    """
-    Takes a dictionary of words and their frequencies
-    and returns a list of pairs where the entries are
-    sorted by frequency 
-    """
     # Not in style, left as exercise
-    stack.append(sorted(stack.pop().iteritems(), key=operator.itemgetter(1), reverse=True))
-
+    stack.extend(sorted(stack.pop().iteritems(), key=operator.itemgetter(1)))
 
 #
 # The main function
@@ -111,9 +102,7 @@ stack.append(sys.argv[1])
 read_file(); filter_chars(); scan(); remove_stop_words()
 frequencies(); sort()
 
-word_freqs = stack.pop()
 for i in range(0, 25):
-    stack.append(word_freqs[i])
-    print stack[0][0], ' - ', stack[0][1]
-    stack.pop()
+    (w, f) = stack.pop()
+    print w, ' - ', f
 
