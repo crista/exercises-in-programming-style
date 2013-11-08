@@ -102,7 +102,10 @@ stack.append(sys.argv[1])
 read_file(); filter_chars(); scan(); remove_stop_words()
 frequencies(); sort()
 
-for i in range(0, 25):
-    (w, f) = stack.pop()
-    print w, ' - ', f
+stack.append(0)
+while stack[-1] < 25:
+    heap['i'] = stack.pop()
+    (w, f) = stack.pop(); print w, ' - ', f
+    stack.append(heap['i']); stack.append(1)
+    stack.append(stack.pop() + stack.pop())
 
