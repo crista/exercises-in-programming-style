@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 #
@@ -64,9 +63,8 @@ def remove_stop_words():
         else:
             heap['words'].append(stack.pop()) # pop it, store it
     stack.extend(heap['words']) # Load the words onto the stack
-    del heap['stop_words'] # We don't need this variable anymore
-    del heap['words'] # We don't need this variable anymore
-
+    del heap['stop_words']; del heap['words'] # Not needed 
+    
 def frequencies():
     """
     Takes a list of words and returns a dictionary associating
