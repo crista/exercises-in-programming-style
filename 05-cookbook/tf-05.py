@@ -8,7 +8,7 @@ words = []
 word_freqs = []
 
 #
-# The functions
+# The procedures
 #
 def read_file(path_to_file):
     """
@@ -47,11 +47,11 @@ def remove_stop_words():
     f.close()
     # add single-letter words
     stop_words.extend(list(string.ascii_lowercase))
-    indeces = []
+    indexes = []
     for i in range(len(words)):
         if words[i] in stop_words:
-            indeces.append(i)
-    for i in reversed(indeces):
+            indexes.append(i)
+    for i in reversed(indexes):
         words.pop(i)
 
 def frequencies():
