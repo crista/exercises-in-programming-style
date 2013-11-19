@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 #
@@ -10,24 +9,17 @@ def read_file(path_to_file):
     Takes a path to a file and returns the entire
     contents of the file as a string
     """
-    f = open(path_to_file)
-    data = f.read()
-    f.close()
+    with open(path_to_file) as f:
+        data = f.read()
     return data
 
-def filter_chars(str_data):
+def filter_chars_and_normalize(str_data):
     """
     Takes a string and returns a copy with all nonalphanumeric 
     chars replaced by white space
     """
     pattern = re.compile('[\W_]+')
-    return pattern.sub(' ', str_data)
-
-def normalize(str_data):
-    """
-    Takes a string and returns a copy with all chars in lower case
-    """
-    return str_data.lower()
+    return pattern.sub(' ', str_data).lower()
 
 def scan(str_data):
     """
@@ -41,9 +33,8 @@ def remove_stop_words(word_list):
     Takes a list of words and returns a copy with all stop 
     words removed 
     """
-    f = open('../stop_words.txt')
-    stop_words = f.read().split(',')
-    f.close()
+    with open('../stop_words.txt') as f:
+        stop_words = f.read().split(',')
     # add single-letter words
     stop_words.extend(list(string.ascii_lowercase))
     return [w for w in word_list if not w in stop_words]
@@ -69,11 +60,10 @@ def sort(word_freq):
     """
     return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
 
-
 #
 # The main function
 #
-word_freqs = sort(frequencies(remove_stop_words(scan(normalize(filter_chars(read_file(sys.argv[1])))))))
+word_freqs = sort(frequencies(remove_stop_words(scan(filter_chars_and_normalize(read_file(sys.argv[1]))))))
 
 for tf in word_freqs[0:25]:
     print tf[0], ' - ', tf[1]
