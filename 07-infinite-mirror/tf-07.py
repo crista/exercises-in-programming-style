@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import re, sys, operator
 
 # Mileage may vary. If this crashes, make it lower
@@ -7,16 +8,23 @@ RECURSION_LIMIT = 9500
 sys.setrecursionlimit(RECURSION_LIMIT+10)
 
 def count(word_list, word_freqs):
+    # What to do with an empty list
     if word_list == []:
         return
-
-    if word_list[0] not in stopwords:
-        if word_list[0] in word_freqs:
-            word_freqs[word_list[0]] += 1
-        else:
-            word_freqs[word_list[0]] = 1
-
-    count(word_list[1:], word_freqs)
+    # The base case, what to do with 1 word
+    if len(word_list) == 1:
+        word = word_list[0]
+        if word not in stopwords:
+            if word in word_freqs:
+                word_freqs[word] += 1
+            else:
+                word_freqs[word] = 1
+    # The inductive case, what to do with a list of words
+    else:
+        # Process the head word
+        count([word_list[0]], word_freqs)
+        # Process the tail 
+        count(word_list[1:], word_freqs)
 
 stopwords = set(open('../stop_words.txt').read().split(','))
 words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
