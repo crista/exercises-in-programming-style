@@ -26,6 +26,16 @@ def count(word_list, word_freqs):
         # Process the tail 
         count(word_list[1:], word_freqs)
 
+def wf_print(word_freq):
+    if word_freq == []:
+        return
+    if len(word_freq) == 1:
+        (w, c) = word_freq[0]
+        print w, '-', c
+    else:
+        wf_print([word_freq[0]])
+        wf_print(word_freq[1:])
+
 stopwords = set(open('../stop_words.txt').read().split(','))
 words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
 word_freqs = {}
@@ -34,5 +44,5 @@ word_freqs = {}
 for i in range(0, len(words), RECURSION_LIMIT):
     count(words[i:i+RECURSION_LIMIT], word_freqs)
 
-for (w, c) in sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]:
-    print w, '-', c
+wf_print(sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25])
+
