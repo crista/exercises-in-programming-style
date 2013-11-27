@@ -12,8 +12,8 @@ class TFTheOne:
         result = func(self._value)
         return TFTheOne(result)
 
-def printm(monad):
-    print monad._value,
+    def printme(self):
+        print self._value,
 
 #
 # The functions
@@ -61,5 +61,5 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-printm(TFTheOne(sys.argv[1]).bind(read_file).bind(filter_chars).bind(normalize).bind(scan).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs))
+TFTheOne(sys.argv[1]).bind(read_file).bind(filter_chars).bind(normalize).bind(scan).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
 
