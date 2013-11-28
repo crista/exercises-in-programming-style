@@ -9,8 +9,8 @@ class TFTheOne:
         self._value = v
 
     def bind(self, func):
-        result = func(self._value)
-        return TFTheOne(result)
+        self._value = func(self._value)
+        return self
 
     def printme(self):
         print self._value,
