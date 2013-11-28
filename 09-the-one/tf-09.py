@@ -13,7 +13,7 @@ class TFTheOne:
         return self
 
     def printme(self):
-        print self._value,
+        print self._value
 
 #
 # The functions
