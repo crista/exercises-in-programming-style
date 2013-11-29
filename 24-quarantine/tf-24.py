@@ -26,27 +26,13 @@ def get_input(arg):
         return sys.argv[1]
     return _f
 
-def read_file(path_to_file):
+def extract_words(path_to_file):
     def _f():
         with open(path_to_file) as f:
             data = f.read()
-        return data
-    return _f
-
-def filter_chars(str_data):
-    def _f():
         pattern = re.compile('[\W_]+')
-        return pattern.sub(' ', str_data)
-    return _f
-
-def normalize(str_data):
-    def _f():
-        return str_data.lower()
-    return _f
-
-def scan(str_data):
-    def _f():
-        return str_data.split()
+        word_list = pattern.sub(' ', data).lower().split()
+        return word_list
     return _f
 
 def remove_stop_words(word_list):
@@ -86,6 +72,6 @@ def top25_freqs(word_freqs):
 # The main function
 #
 quarantine = TFQuarantine()
-quarantine.bind(get_input).bind(read_file).bind(filter_chars).bind(normalize).bind(scan).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs)
+quarantine.bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs)
 quarantine.execute()
 
