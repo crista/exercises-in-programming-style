@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # My golf score is slightly lower!  
 # Best wishes, Peter Norvig
 
