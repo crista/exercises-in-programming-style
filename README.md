@@ -2,7 +2,10 @@ Exercises in Programming Style
 ==============================
 
 Comprehensive collection of well-known, and not so well-known, programming
-styles using a simple computational task, term frequency.
+styles using a simple computational task, term frequency. All programs run 
+with the following command line:
+
+$ python tf-NN.py ../pride-and-prejudice.txt
 
 Additions are welcome! 
 
