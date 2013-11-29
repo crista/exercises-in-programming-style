@@ -13,10 +13,13 @@ class TFQuarantine:
         return self
 
     def execute(self):
+        def guard_callable(v):
+            return v() if hasattr(v, '__call__') else v
+
         value = lambda : None
         for func in self._funcs:
-            value = func(value())
-        print value()
+            value = func(guard_callable(value))
+        print guard_callable(value)
 
 #
 # The functions
@@ -45,20 +48,16 @@ def remove_stop_words(word_list):
     return _f
 
 def frequencies(word_list):
-    def _f():
-        word_freqs = {}
-        for w in word_list:
-            if w in word_freqs:
-                word_freqs[w] += 1
-            else:
-                word_freqs[w] = 1
-        return word_freqs
-    return _f
+    word_freqs = {}
+    for w in word_list:
+        if w in word_freqs:
+            word_freqs[w] += 1
+        else:
+            word_freqs[w] = 1
+    return word_freqs
 
 def sort(word_freq):
-    def _f():
-        return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
-    return _f
+    return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
 
 def top25_freqs(word_freqs):
     def _f():
