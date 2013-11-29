@@ -60,12 +60,10 @@ def sort(word_freq):
     return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
 
 def top25_freqs(word_freqs):
-    def _f():
-        top25 = ""
-        for tf in word_freqs[0:25]:
-            top25 += str(tf[0]) + ' - ' + str(tf[1]) + '\n'
-        return top25
-    return _f
+    top25 = ""
+    for tf in word_freqs[0:25]:
+        top25 += str(tf[0]) + ' - ' + str(tf[1]) + '\n'
+    return top25
 
 #
 # The main function
