@@ -5,8 +5,8 @@ import sys, re, operator, string
 # The Quarantine class for this example
 #
 class TFQuarantine:
-    def __init__(self):
-        self._funcs = []
+    def __init__(self, func):
+        self._funcs = [func]
 
     def bind(self, func):
         self._funcs.append(func)
@@ -68,7 +68,6 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-quarantine = TFQuarantine()
-quarantine.bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs)
+quarantine = TFQuarantine(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs)
 quarantine.execute()
 
