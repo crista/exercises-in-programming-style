@@ -3,11 +3,12 @@ Style #23
 
 Constraints:
 
-- Program should not proceed if preconditions aren't met or if errors occur
+- A sequence of functions should not proceed if preconditions aren't
+  met or if errors occur
 
 - Core program functions have no exception handling, not even the main function
 
-- The final result should show the failure, if one occurred
+- The final result of the function chain should show the failure, if one occurred
 
 Possible names:
 
