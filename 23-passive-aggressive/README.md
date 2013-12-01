@@ -9,7 +9,7 @@ Constraints:
 
 - When calling out other functions, core program functions don't check for errors
 
-- Exception handling occurs only at the top level of a function call chain
+- Exception handling occurs at higher levels of function call chains, wherever it is meaningul tp do so
 
 Possible names:
 
