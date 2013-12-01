@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 import sys, re, operator, string
 
-angry = "^*(&%#@^! (I don't want this)"
-
 #
 # The PassiveAggressive class for this example
 #
@@ -16,8 +14,6 @@ class TFPassiveAggressive:
         if self._e == None:
             try:
                 self._value = func(self._value)
-                if self._value == angry:
-                    raise AssertionError(angry)
             except Exception as e:
                 self._e = e
                 self._offending_func = func
@@ -33,14 +29,12 @@ class TFPassiveAggressive:
 # The functions
 #
 def get_input(arg):
-    if len(sys.argv) <= 1:
-        return angry
-
+    assert(len(sys.argv) > 1), "You idiot! I need an input file! I quit!"
     return sys.argv[1]
 
 def extract_words(path_to_file):
-    if type(path_to_file) != str or not path_to_file:
-        return angry
+    assert(type(path_to_file) is str), "I need a string! I quit!" 
+    assert(path_to_file), "I need a non-empty string! I quit!" 
 
     with open(path_to_file) as f:
         data = f.read()
@@ -49,8 +43,7 @@ def extract_words(path_to_file):
     return word_list
 
 def remove_stop_words(word_list):
-    if type(word_list) != list or not word_list:
-        return angry
+    assert(type(word_list) is list), "I need a list! I quit!"
 
     with open('../stop_words.txt') as f:
         stop_words = f.read().split(',')
@@ -59,8 +52,8 @@ def remove_stop_words(word_list):
     return [w for w in word_list if not w in stop_words]
 
 def frequencies(word_list):
-    if type(word_list) != list or not word_list:
-        return angry
+    assert(type(word_list) is list), "I need a list! I quit!"
+    assert(word_list <> []), "I need a non-empty list! I quit!"
 
     word_freqs = {}
     for w in word_list:
@@ -71,14 +64,14 @@ def frequencies(word_list):
     return word_freqs
 
 def sort(word_freqs):
-    if type(word_freqs) != dict or not word_freqs:
-        return angry
+    assert(type(word_freqs) is dict), "I need a dictionary! I quit!"
+    assert(word_freqs <> {}), "I need a non-empty dictionary! I quit!"
 
     return sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
 
 def top25_freqs(word_freqs):
-    if type(word_freqs) != dict or not word_freqs:
-        return angry
+    assert(type(word_freqs) is list), "I need a list! I quit!"
+    assert(word_freqs <> {}), "I need a non-empty dictionary! I quit!"
 
     top25 = ""
     for tf in word_freqs[0:25]:
@@ -88,6 +81,5 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-pa = TFPassiveAggressive(None)
-pa.bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
+TFPassiveAggressive(None).bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
 
