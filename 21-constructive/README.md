@@ -12,7 +12,9 @@ Constraints:
 
 Possible names:
 
+- Constructive
 - Defensive
-- Realistic
 - Hopeful
 - Shit happens, life goes on
+
+(See http://en.wikipedia.org/wiki/Constructivism_(mathematics))
