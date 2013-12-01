@@ -41,15 +41,6 @@ def sort(word_freqs):
 
     return sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
 
-def top25_freqs(word_freqs):
-    assert(type(word_freqs) is list), "I need a list! I quit!"
-    assert(word_freqs <> {}), "I need a non-empty dictionary! I quit!"
-
-    top25 = ""
-    for tf in word_freqs[0:25]:
-        top25 += str(tf[0]) + ' - ' + str(tf[1]) + '\n'
-    return top25
-
 #
 # The main function
 #
