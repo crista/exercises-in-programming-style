@@ -59,15 +59,23 @@ def sort(word_freq):
     assert(type(word_freq) is dict), "I need a dictionary! I quit!"
     assert(word_freq <> {}), "I need a non-empty dictionary! I quit!"
 
-    return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    try:
+        return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    except Exception as e:
+        print "Sorted threw {0}: {1}".format(e)
+        raise e
 
 #
 # The main function
 #
-assert(len(sys.argv) > 1), "You idiot! I need an input file! I quit!"
-word_freqs = sort(frequencies(extract_words(sys.argv[1])))
+try:
+    assert(len(sys.argv) > 1), "You idiot! I need an input file! I quit!"
+    word_freqs = sort(frequencies(extract_words(sys.argv[1])))
 
-assert(len(word_freqs) > 25), "OMG! Less than 25 words! I QUIT!"
-for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
-
+    assert(type(word_freqs) is list), "OMG! This is not a list! I quit!"
+    assert(len(word_freqs) > 25), "SRSLY? Less than 25 words! I QUIT!"
+    for tf in word_freqs[0:25]:
+        print tf[0], ' - ', tf[1]
+except Exception as e:
+    print "Something wrong: {0}".format(e)
+    

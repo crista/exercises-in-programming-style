@@ -1,13 +1,15 @@
-Style #21
+Style #22
 ==============================
 
 Constraints:
 
 - Every single procedure and function checks the sanity of its
-  arguments and refuses to work when the arguments are unreasonable
+  arguments and refuses to continue when the arguments are
+  unreasonable, throwing an exception
 
-- All code blocks check for all possible errors and refuse to continue
-  when things go wrong
+- All code blocks check for all possible errors, print out
+  context-specific messages when errors occur, and pass the exceptions
+  up the function call chain
 
 Possible names:
 

@@ -2,6 +2,30 @@
 import sys, re, operator, string
 
 #
+# The PassiveAggressive class for this example
+#
+class TFPassiveAggressive:
+    def __init__(self, v):
+        self._e = None
+        self._offending_func = None
+        self._value = v
+
+    def bind(self, func):
+        if self._e == None:
+            try:
+                self._value = func(self._value)
+            except Exception as e:
+                self._e = e
+                self._offending_func = func
+        return self
+
+    def printme(self):
+        if self._e == None:
+            print self._value
+        else:
+            print self._e, " in ", self._offending_func.__name__
+
+#
 # The functions
 #
 def get_input(arg):
@@ -57,14 +81,5 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-try:
-    assert(len(sys.argv) > 1), "You idiot! I need an input file! I quit!"
-    word_freqs = sort(frequencies(extract_words(sys.argv[1])))
-
-    assert(len(word_freqs) > 25), "OMG! Less than 25 words! I QUIT!"
-    for tf in word_freqs[0:25]:
-        print tf[0], ' - ', tf[1]
-except Exception as e:
-        print "Something wrong: {0}".format(e)
-
+TFPassiveAggressive(None).bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
 

@@ -3,15 +3,16 @@ Style #23
 
 Constraints:
 
-- A sequence of functions should not proceed if preconditions aren't
-  met or if errors occur
+- Every single procedure and function checks the sanity of its
+  arguments and refuses to continue when the arguments are
+  unreasonable, throwing an exception
 
-- Core program functions have no exception handling, not even the main function
+- When calling out other functions, core program functions don't check for errors
 
-- The final result of the function chain should show the failure, if one occurred
+- Exception handling occurs only at the top level of a function call chain
 
 Possible names:
 
 - Passive aggressive
-- Monadic Exceptions
+
 
