@@ -1,18 +1,13 @@
 #!/usr/bin/env python
 
-import sys, re, operator, string, inspect
+import sys, re, operator, string, traceback
 
 #
 # The functions
 #
 def extract_words(path_to_file):
-    """
-    Takes a path to a file and returns the non-stop
-    words, after properly removing nonalphanumeric chars
-    and normalizing for lower case
-    """
-    assert(type(path_to_file) is str), "I need a string! I quit!" 
-    assert(path_to_file), "I need a non-empty string! I quit!" 
+    assert(type(path_to_file) is str), "I need a string!" 
+    assert(path_to_file), "I need a non-empty string!" 
 
     try:
         with open(path_to_file) as f:
@@ -23,6 +18,10 @@ def extract_words(path_to_file):
     
     pattern = re.compile('[\W_]+')
     word_list = pattern.sub(' ', str_data).lower().split()
+    return word_list
+
+def remove_stop_words(word_list):
+    assert(type(word_list) is list), "I need a list!"
 
     try:
         with open('../stop_words.txt') as f:
@@ -35,12 +34,8 @@ def extract_words(path_to_file):
     return [w for w in word_list if not w in stop_words]
 
 def frequencies(word_list):
-    """
-    Takes a list of words and returns a dictionary associating
-    words with frequencies of occurrence
-    """
-    assert(type(word_list) is list), "I need a list! I quit!"
-    assert(word_list <> []), "I need a non-empty list! I quit!"
+    assert(type(word_list) is list), "I need a list!"
+    assert(word_list <> []), "I need a non-empty list!"
 
     word_freqs = {}
     for w in word_list:
@@ -51,13 +46,8 @@ def frequencies(word_list):
     return word_freqs
 
 def sort(word_freq):
-    """
-    Takes a dictionary of words and their frequencies
-    and returns a list of pairs where the entries are
-    sorted by frequency 
-    """
-    assert(type(word_freq) is dict), "I need a dictionary! I quit!"
-    assert(word_freq <> {}), "I need a non-empty dictionary! I quit!"
+    assert(type(word_freq) is dict), "I need a dictionary!"
+    assert(word_freq <> {}), "I need a non-empty dictionary!"
 
     try:
         return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
@@ -69,13 +59,14 @@ def sort(word_freq):
 # The main function
 #
 try:
-    assert(len(sys.argv) > 1), "You idiot! I need an input file! I quit!"
-    word_freqs = sort(frequencies(extract_words(sys.argv[1])))
+    assert(len(sys.argv) > 1), "You idiot! I need an input file!"
+    word_freqs = sort(frequencies(remove_stop_words(extract_words(sys.argv[1]))))
 
-    assert(type(word_freqs) is list), "OMG! This is not a list! I quit!"
-    assert(len(word_freqs) > 25), "SRSLY? Less than 25 words! I QUIT!"
-    for tf in word_freqs[0:25]:
-        print tf[0], ' - ', tf[1]
+    assert(type(word_freqs) is list), "OMG! This is not a list!"
+    assert(len(word_freqs) > 25), "SRSLY? Less than 25 words!"
+    for (w, c) in word_freqs[0:25]:
+        print w, ' - ', c
 except Exception as e:
     print "Something wrong: {0}".format(e)
+    traceback.print_exc()
     
