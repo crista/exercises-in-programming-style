@@ -7,11 +7,12 @@ Constraints:
   arguments and either returns something sensible when the arguments
   are unreasonable or assigns them reasonable values
 
-- All code blocks check for all possible errors and escape the block
-  when things go wrong
+- All code blocks check for possible errors and escape the block
+  when things go wrong, setting the state to something reasonable
 
 Possible names:
 
 - Defensive
-- Pessimistic
-- Never trust the caller nor the callee
+- Realistic
+- Hopeful
+- Shit happens, life goes on
