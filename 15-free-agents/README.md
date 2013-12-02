@@ -1,4 +1,4 @@
-Style #25
+Style #15
 ==============================
 
 Similar to the letterbox style, but where the 'things' have
