@@ -1,6 +1,8 @@
 Style #25
 ==============================
 
+This style is a variation of style #09, The One, with the following additional constraints:
+
 Constraints:
 
 - Core program functions have no side effects of any kind, including IO
