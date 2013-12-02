@@ -1,58 +1,39 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 from abc import ABCMeta
 
 #
 # The classes
 #
-class TFExercise(object):
+class TFExercise():
     __metaclass__ = ABCMeta
 
     def info(self):
-        return self.__class__.__name__ + ": No major data structure"
+        return self.__class__.__name__
 
 class DataStorageManager(TFExercise):
     """ Models the contents of the file """
     _data = ''
     def __init__(self, path_to_file):
-        f = open(path_to_file)
-        self._data = f.read()
-        f.close()
-        self.__filter_chars()
-        self.__normalize()
-
-    def __filter_chars(self):
-        """
-        Takes a string and returns a copy with all nonalphanumeric chars
-        replaced by white space
-        """
+        with open(path_to_file) as f:
+            self._data = f.read()
         pattern = re.compile('[\W_]+')
-        self._data = pattern.sub(' ', self._data)
-
-    def __normalize(self):
-        """
-        Takes a string and returns a copy with all characters in lower case
-        """
-        self._data = self._data.lower()
+        self._data = pattern.sub(' ', self._data).lower()
 
     def words(self):
-        """
-        Returns the list words in storage
-        """
+        """ Returns the list words in storage """
         data_str = ''.join(self._data)
         return data_str.split()
 
     def info(self):
-        return self.__class__.__name__ + ": My major data structure is a " + self._data.__class__.__name__
+        return super(DataStorageManager, self).info() + ": My major data structure is a " + self._data.__class__.__name__
 
 class StopWordManager(TFExercise):
     """ Models the stop word filter """
     _stop_words = []
     def __init__(self):
-        f = open('../stop_words.txt')
-        self._stop_words = f.read().split(',')
-        f.close()
+        with open('../stop_words.txt') as f:
+            self._stop_words = f.read().split(',')
         # add single-letter words
         self._stop_words.extend(list(string.ascii_lowercase))
 
@@ -60,7 +41,7 @@ class StopWordManager(TFExercise):
         return word in self._stop_words
 
     def info(self):
-        return self.__class__.__name__ + ": My major data structure is a " + self._stop_words.__class__.__name__
+        return super(StopWordManager, self).info() + ": My major data structure is a " + self._stop_words.__class__.__name__
 
 class WordFrequencyManager(TFExercise):
     """ Keeps the word frequency data """
@@ -76,8 +57,7 @@ class WordFrequencyManager(TFExercise):
         return sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
 
     def info(self):
-        return self.__class__.__name__ + ": My major data structure is a " + self._word_freqs.__class__.__name__
-
+        return super(WordFrequencyManager, self).info() + ": My major data structure is a " + self._word_freqs.__class__.__name__
 
 class WordFrequencyController(TFExercise):
     def __init__(self, path_to_file):
@@ -91,8 +71,8 @@ class WordFrequencyController(TFExercise):
                 self._word_freq_manager.increment_count(w)
 
         word_freqs = self._word_freq_manager.sorted()
-        for tf in word_freqs[0:25]:
-            print tf[0], ' - ', tf[1]
+        for (w, c) in word_freqs[0:25]:
+            print w, ' - ', c
 
 #
 # The main function
