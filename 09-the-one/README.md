@@ -14,6 +14,10 @@ and (3) unwrap the value, so to examine the final result.
 - Larger problem is solved as a pipeline of functions bound
 together, with unwrapping happening at the end.
 
+- Particularly for The One style, the bind operation simply
+calls the given function, giving it the value that it holds, and holds
+on to the returned value.
+
 
 Possible names:
 
