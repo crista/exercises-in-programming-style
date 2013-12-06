@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-
 import abc, sys, re, operator, string
 
 #
-# The abstract data types
+# The abstract things
 #
 class IDataStorage (object):
     """ Models the contents of the file """
@@ -12,7 +11,7 @@ class IDataStorage (object):
     @abc.abstractmethod
     def words(self):
         """ Returns the words in storage """
-        raise NotImplementedError("Abstract Data Type")
+        pass
 
 class IStopWordFilter (object):
     """ Models the stop word filter """
@@ -21,7 +20,7 @@ class IStopWordFilter (object):
     @abc.abstractmethod
     def is_stop_word(self, word):
         """ Checks whether the given word is a stop word """
-        raise NotImplementedError("Abstract Data Type")
+        pass
 
 class IWordFrequencyCounter(object):
     """ Keeps the word frequency data """
@@ -30,58 +29,39 @@ class IWordFrequencyCounter(object):
     @abc.abstractmethod
     def increment_count(self, word):
         """ Increments the count for the given word """
-        raise NotImplementedError("Abstract Data Type")
+        pass
 
     @abc.abstractmethod
     def sorted(self):
         """ Returns the words and their frequencies, sorted by frequency""" 
-        raise NotImplementedError("Abstract Data Type")
+        pass
 
 #
-# The concrete type implementations
+# The concrete things
 #
 class DataStorage:
-    """ Implements the contents of the file """
     _data = ''
     def __init__(self, path_to_file):
-        f = open(path_to_file)
-        self._data = f.read()
-        f.close()
-        self.__filter_chars_normalize()
-        self.__scan()
-
-    def __filter_chars_normalize(self):
-        """
-        Takes a string and returns a copy with all nonalphanumeric chars
-        replaced by white space
-        """
+        with open(path_to_file) as f:
+            self._data = f.read()
         pattern = re.compile('[\W_]+')
         self._data = pattern.sub(' ', self._data).lower()
-
-    def __scan(self):
         self._data = ''.join(self._data).split()
 
     def words(self):
-        """
-        Returns the list words in storage
-        """
         return self._data
 
 class StopWordFilter:
-    """ Implements the stop word filter """
     _stop_words = []
     def __init__(self):
-        f = open('../stop_words.txt')
-        self._stop_words = f.read().split(',')
-        f.close()
-        # add single-letter words
+        with open('../stop_words.txt') as f:
+            self._stop_words = f.read().split(',')
         self._stop_words.extend(list(string.ascii_lowercase))
 
     def is_stop_word(self, word):
         return word in self._stop_words
 
 class WordFrequencyCounter:
-    """ Implements the word frequency data """
     _word_freqs = {}
 
     def increment_count(self, word):
@@ -95,12 +75,15 @@ class WordFrequencyCounter:
 
 
 #
-# The wiring between ADTs and concrete implementations
+# The wiring between abstract things and concrete things
 #
 IDataStorage.register(DataStorage)
 IStopWordFilter.register(StopWordFilter)
 IWordFrequencyCounter.register(WordFrequencyCounter)
 
+#
+# The application object
+#
 class WordFrequencyApplication:
     def __init__(self, path_to_file):
         self._storage = DataStorage(path_to_file)
@@ -113,8 +96,8 @@ class WordFrequencyApplication:
                 self._word_freq_counter.increment_count(w)
 
         word_freqs = self._word_freq_counter.sorted()
-        for tf in word_freqs[0:25]:
-            print tf[0], ' - ', tf[1]
+        for (w, c) in word_freqs[0:25]:
+            print w, ' - ', c
 
 #
 # The main function
