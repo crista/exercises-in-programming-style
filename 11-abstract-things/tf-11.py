@@ -39,7 +39,7 @@ class IWordFrequencyCounter(object):
 #
 # The concrete things
 #
-class DataStorage:
+class DataStorageManager:
     _data = ''
     def __init__(self, path_to_file):
         with open(path_to_file) as f:
@@ -51,7 +51,7 @@ class DataStorage:
     def words(self):
         return self._data
 
-class StopWordFilter:
+class StopWordManager:
     _stop_words = []
     def __init__(self):
         with open('../stop_words.txt') as f:
@@ -61,7 +61,7 @@ class StopWordFilter:
     def is_stop_word(self, word):
         return word in self._stop_words
 
-class WordFrequencyCounter:
+class WordFrequencyManager:
     _word_freqs = {}
 
     def increment_count(self, word):
@@ -77,18 +77,18 @@ class WordFrequencyCounter:
 #
 # The wiring between abstract things and concrete things
 #
-IDataStorage.register(DataStorage)
-IStopWordFilter.register(StopWordFilter)
-IWordFrequencyCounter.register(WordFrequencyCounter)
+IDataStorage.register(DataStorageManager)
+IStopWordFilter.register(StopWordManager)
+IWordFrequencyCounter.register(WordFrequencyManager)
 
 #
 # The application object
 #
-class WordFrequencyApplication:
+class WordFrequencyController:
     def __init__(self, path_to_file):
-        self._storage = DataStorage(path_to_file)
-        self._stop_word_manager = StopWordFilter()
-        self._word_freq_counter = WordFrequencyCounter()
+        self._storage = DataStorageManager(path_to_file)
+        self._stop_word_manager = StopWordManager()
+        self._word_freq_counter = WordFrequencyManager()
 
     def run(self):
         for w in self._storage.words():
@@ -102,4 +102,4 @@ class WordFrequencyApplication:
 #
 # The main function
 #
-WordFrequencyApplication(sys.argv[1]).run()
+WordFrequencyController(sys.argv[1]).run()
