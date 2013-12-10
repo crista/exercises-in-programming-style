@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 #
@@ -42,9 +41,8 @@ class DataStorage:
         wfapp.register_for_dowork_event(self.__produce_words)
 
     def __load(self, path_to_file):
-        f = open(path_to_file)
-        self._data = f.read()
-        f.close()
+        with open(path_to_file) as f:
+            self._data = f.read()
         pattern = re.compile('[\W_]+')
         self._data = pattern.sub(' ', self._data).lower()
 
@@ -67,9 +65,8 @@ class StopWordFilter:
         wfapp.register_for_load_event(self.__load)
 
     def __load(self, ignore):
-        f = open('../stop_words.txt')
-        self._stop_words = f.read().split(',')
-        f.close()
+        with open('../stop_words.txt') as f:
+            self._stop_words = f.read().split(',')
         # add single-letter words
         self._stop_words.extend(list(string.ascii_lowercase))
 
@@ -91,8 +88,8 @@ class WordFrequencyCounter:
 
     def __print_freqs(self):
         word_freqs = sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
-        for tf in word_freqs[0:25]:
-            print tf[0], ' - ', tf[1]
+        for (w, c) in word_freqs[0:25]:
+            print w, ' - ', c
 
 #
 # The main function
