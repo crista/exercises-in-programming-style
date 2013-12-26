@@ -36,9 +36,8 @@ class DataStorageManager(ActiveWFObject):
     def _init(self, message):
         path_to_file = message[0]
         self._stop_word_manager = message[1]
-        f = open(path_to_file)
-        self._data = f.read()
-        f.close()
+        with open(path_to_file) as f:
+            self._data = f.read()
         pattern = re.compile('[\W_]+')
         self._data = pattern.sub(' ', self._data).lower()
 
@@ -65,9 +64,8 @@ class StopWordManager(ActiveWFObject):
             self._word_freqs_manager.queue.put(message)
  
     def _init(self, message):
-        f = open('../stop_words.txt')
-        self._stop_words = f.read().split(',')
-        f.close()
+        with open('../stop_words.txt') as f:
+            self._stop_words = f.read().split(',')
         self._stop_words.extend(list(string.ascii_lowercase))
         self._word_freqs_manager = message[0]
 
