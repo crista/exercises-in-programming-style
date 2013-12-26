@@ -20,9 +20,8 @@ class EventManager:
             for h in self._subscriptions[event_type]:
                 h(event)
 
-
 #
-# The "agents"
+# The application entities
 #
 class DataStorage:
     """ Models the contents of the file """
@@ -39,7 +38,6 @@ class DataStorage:
         self._data = pattern.sub(' ', self._data).lower()
 
     def produce_words(self, event):
-        """ Yields the list words in storage, one word at a time """
         data_str = ''.join(self._data)
         for w in data_str.split():
             self._event_manager.publish(('word', w))
