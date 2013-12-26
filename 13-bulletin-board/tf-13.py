@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 #
@@ -34,16 +33,8 @@ class DataStorage:
 
     def load(self, event):
         path_to_file = event[1]
-        f = open(path_to_file)
-        self._data = f.read()
-        f.close()
-        self.__filter_chars_normalize()
-
-    def __filter_chars_normalize(self):
-        """
-        Takes a string and returns a copy with all nonalphanumeric chars
-        replaced by white space
-        """
+        with open(path_to_file) as f:
+            self._data = f.read()
         pattern = re.compile('[\W_]+')
         self._data = pattern.sub(' ', self._data).lower()
 
@@ -63,10 +54,8 @@ class StopWordFilter:
         self._event_manager.subscribe('word', self.is_stop_word)
 
     def load(self, event):
-        f = open('../stop_words.txt')
-        self._stop_words = f.read().split(',')
-        f.close()
-        # add single-letter words
+        with open('../stop_words.txt') as f:
+            self._stop_words = f.read().split(',')
         self._stop_words.extend(list(string.ascii_lowercase))
 
     def is_stop_word(self, event):
@@ -91,9 +80,8 @@ class WordFrequencyCounter:
 
     def print_freqs(self, event):
         word_freqs = sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
-        for tf in word_freqs[0:25]:
-            print tf[0], ' - ', tf[1]
-
+        for (w, c) in word_freqs[0:25]:
+            print w, ' - ', c
 
 class WordFrequencyApplication:
     def __init__(self, event_manager):
@@ -113,5 +101,6 @@ class WordFrequencyApplication:
 # The main function
 #
 em = EventManager()
-DataStorage(em), StopWordFilter(em), WordFrequencyCounter(em), WordFrequencyApplication(em)
+DataStorage(em), StopWordFilter(em), WordFrequencyCounter(em)
+WordFrequencyApplication(em)
 em.publish(('run', sys.argv[1]))
