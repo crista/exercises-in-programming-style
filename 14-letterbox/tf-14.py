@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 class DataStorageManager():
@@ -15,19 +14,15 @@ class DataStorageManager():
             raise Exception("Message not understood " + message[0])
  
     def _init(self, path_to_file):
-        f = open(path_to_file)
-        self._data = f.read()
-        f.close()
+        with open(path_to_file) as f:
+            self._data = f.read()
         pattern = re.compile('[\W_]+')
         self._data = pattern.sub(' ', self._data).lower()
 
     def _words(self):
-        """
-        Returns the list words in storage
-        """
+        """ Returns the list words in storage"""
         data_str = ''.join(self._data)
         return data_str.split()
-
 
 class StopWordManager():
     """ Models the stop word filter """
@@ -42,9 +37,8 @@ class StopWordManager():
             raise Exception("Message not understood " + message[0])
  
     def _init(self):
-        f = open('../stop_words.txt')
-        self._stop_words = f.read().split(',')
-        f.close()
+        with open('../stop_words.txt') as f:
+            self._stop_words = f.read().split(',')
         self._stop_words.extend(list(string.ascii_lowercase))
 
     def _is_stop_word(self, word):
@@ -94,8 +88,8 @@ class WordFrequencyController():
                 self._word_freq_manager.dispatch(['increment_count', w])
 
         word_freqs = self._word_freq_manager.dispatch(['sorted'])
-        for tf in word_freqs[0:25]:
-            print tf[0], ' - ', tf[1]
+        for (w, c) in word_freqs[0:25]:
+            print w, ' - ', c
 
 #
 # The main function
