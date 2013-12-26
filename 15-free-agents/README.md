@@ -9,15 +9,14 @@ Constraints:
 - The larger problem is decomposed into 'things' that make sense for
   the problem domain 
 
-- Each 'thing' is a capsule of data that exposes one single procedure,
-  namely the ability to receive and dispatch messages that are sent to
-  it
+- Each 'thing' has a queue meant for other \textit{things} to place
+messages in it
 
-- Each 'thing' has its own thread of execution independent of the others
+- Each 'thing' is a capsule of data that exposes only its
+ability to receive messages via the queue
 
-- Each 'thing' has a queue where messages to it are placed
-
-- Message dispatch can result in sending the message to another 'thing'
+- Each 'thing' has its own thread of execution independent of the
+others.
 
 Possible names:
 
