@@ -15,15 +15,11 @@ def partition(data_str, nlines):
 
 def split_words(data_str):
     """ 
-    Takes a string, filters non alphanumeric characters, normalizes to
-    lower case, scans for words, and filters the stop words. 
-    It returns a list of pairs (word, 1), one for each word in the input, so
+    Takes a string,  returns a list of pairs (word, 1), 
+    one for each word in the input, so
     [(w1, 1), (w2, 1), ..., (wn, 1)]
     """
     def _scan(str_data):
-        """
-        Takes a string and returns a list of words
-        """
         pattern = re.compile('[\W_]+')
         return pattern.sub(' ', str_data).lower().split()
 
@@ -60,7 +56,6 @@ def count_words(pairs_list_1, pairs_list_2):
 #
 # Auxiliary functions
 #
-
 def read_file(path_to_file):
     with open(path_to_file) as f:
         data = f.read()
