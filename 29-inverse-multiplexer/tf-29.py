@@ -34,7 +34,6 @@ def split_words(data_str):
     words = _remove_stop_words(_scan(data_str))
     for w in words:
         result.append((w, 1))
-
     return result
 
 def count_words(pairs_list_1, pairs_list_2):
@@ -50,7 +49,6 @@ def count_words(pairs_list_1, pairs_list_2):
             mapping[p[0]] += p[1]
         else:
             mapping[p[0]] = 1
-
     return mapping.items()
 
 #
