@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 #
@@ -7,7 +6,7 @@ import sys, re, operator, string
 #
 def partition(data_str, nlines):
     """ 
-    Generator function that partitions the input data_str (a big string)
+    Partitions the input data_str (a big string)
     into chunks of nlines.
     """
     lines = data_str.split('\n')
@@ -21,38 +20,22 @@ def split_words(data_str):
     It returns a list of pairs (word, 1), one for each word in the input, so
     [(w1, 1), (w2, 1), ..., (wn, 1)]
     """
-    def _filter_chars(str_data):
-        """
-        Takes a string and returns a copy with all nonalphanumeric chars
-        replaced by white space
-        """
-        pattern = re.compile('[\W_]+')
-        return pattern.sub(' ', str_data)
-
-    def _normalize(str_data):
-        """
-        Takes a string and returns a copy with all characters in lower case
-        """
-        return str_data.lower()
-
     def _scan(str_data):
         """
-        Takes a string and scans for words, returning
-        a list of words.
+        Takes a string and returns a list of words
         """
-        return str_data.split()
+        pattern = re.compile('[\W_]+')
+        return pattern.sub(' ', str_data).lower().split()
 
     def _remove_stop_words(word_list):
-        f = open('../stop_words.txt')
-        stop_words = f.read().split(',')
-        f.close()
-        # add single-letter words
+        with open('../stop_words.txt') as f:
+            stop_words = f.read().split(',')
         stop_words.extend(list(string.ascii_lowercase))
         return [w for w in word_list if not w in stop_words]
 
     # The actual work of splitting the input into words
     result = []
-    words = _remove_stop_words(_scan(_normalize(_filter_chars(data_str))))
+    words = _remove_stop_words(_scan(data_str))
     for w in words:
         result.append((w, 1))
 
@@ -79,21 +62,11 @@ def count_words(pairs_list_1, pairs_list_2):
 #
 
 def read_file(path_to_file):
-    """
-    Takes a path to a file and returns the entire
-    contents of the file as a string
-    """
-    f = open(path_to_file)
-    data = f.read()
-    f.close()
+    with open(path_to_file) as f:
+        data = f.read()
     return data
 
 def sort(word_freq):
-    """
-    Takes a collection of words and their frequencies
-    and returns a collection of pairs where the entries are
-    sorted by frequency 
-    """
     return sorted(word_freq, key=operator.itemgetter(1), reverse=True)
 
 
@@ -104,6 +77,6 @@ splits = map(split_words, partition(read_file(sys.argv[1]), 200))
 splits.insert(0, []) # Normalize input to reduce
 word_freqs = sort(reduce(count_words, splits))
 
-for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+for (w, c) in word_freqs[0:25]:
+    print w, ' - ', c
 
