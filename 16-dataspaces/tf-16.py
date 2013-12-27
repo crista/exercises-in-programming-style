@@ -23,15 +23,15 @@ def process_words():
                 word_freqs[word] = 1
     freq_space.put(word_freqs)
 
+# Let's have this thread populate the word space
+for word in re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower()):
+    word_space.put(word)
+
 # Let's create the workers and launch them at their jobs
 workers = []
 for i in range(5):
     workers.append(threading.Thread(target = process_words))
 [t.start() for t in workers]
-
-# Let's have this thread populate the word space
-for word in re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower()):
-    word_space.put(word)
 
 # Let's wait for the workers to finish
 [t.join() for t in workers]
