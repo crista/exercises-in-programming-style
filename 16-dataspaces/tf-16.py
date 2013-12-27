@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import re, sys, operator, Queue, threading
 
 # Two data spaces
