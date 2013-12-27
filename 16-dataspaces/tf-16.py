@@ -23,7 +23,6 @@ def process_words():
                 word_freqs[word] = 1
     freq_space.put(word_freqs)
 
-
 # Let's create the workers and launch them at their jobs
 workers = []
 for i in range(5):
