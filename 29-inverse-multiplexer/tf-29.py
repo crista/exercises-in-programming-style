@@ -62,7 +62,6 @@ def read_file(path_to_file):
 def sort(word_freq):
     return sorted(word_freq, key=operator.itemgetter(1), reverse=True)
 
-
 #
 # The main function
 #
