@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-import sys, re, operator, string
+import sys, re, operator, string, os
 
 #
-# Two down-to-earth things that cannot be reflected on
-# without serious performance penalties
+# Two down-to-earth things
 #
 stops = set(open("../stop_words.txt").read().split(",") + list(string.ascii_lowercase))
 
@@ -19,18 +18,20 @@ def frequencies_imp(word_list):
 #
 # Let's write our functions as strings.
 #
-extract_words_func = "lambda name : [x.lower() for x in re.split('[^a-zA-Z]+', open(name).read()) if len(x) > 0 and x.lower() not in stops]"
-
-frequencies_func = "lambda word_list : frequencies_imp(word_list)"
-
-sort_func = "lambda word_freq: sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)"
-
+if len(sys.argv) > 1:
+    extract_words_func = "lambda name : [x.lower() for x in re.split('[^a-zA-Z]+', open(name).read()) if len(x) > 0 and x.lower() not in stops]"
+    frequencies_func = "lambda word_list : frequencies_imp(word_list)"
+    sort_func = "lambda word_freq: sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)"
+    filename = sys.argv[1]
+else:
+    extract_words_func = "lambda x: []"
+    frequencies_func = "lambda x: []"
+    sort_func = "lambda x: []"
+    filename = os.path.basename(__file__)
 #
 # So far, this program isn't much about term-frequency. It's about
 # a bunch of strings that look like functions.
 # Let's add our functions to the "base" program, dynamically.
-# We're re-writing this program by adding more functions to it
-# from "above".
 #
 exec('extract_words = ' + extract_words_func)
 exec('frequencies = ' + frequencies_func)
@@ -38,11 +39,11 @@ exec('sort = ' + sort_func)
 
 #
 # The main function. This would work just fine:
-#  word_freqs = sort(frequencies(extract_words(sys.argv[1])))
+#  word_freqs = sort(frequencies(extract_words(filename)))
 # But because we're being introspective, we'll call the 
 # functions also from "above"
 #
-word_freqs = locals()['sort'](locals()['frequencies'](locals()['extract_words'](sys.argv[1])))
+word_freqs = locals()['sort'](locals()['frequencies'](locals()['extract_words'](filename)))
 
 for (w, c) in word_freqs[0:25]:
     print w, ' - ', c
