@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, operator, string
 
 #
@@ -9,10 +8,6 @@ import sys, re, operator, string
 stops = set(open("../stop_words.txt").read().split(",") + list(string.ascii_lowercase))
 
 def frequencies_imp(word_list):
-    """
-    Takes a list of words and returns a dictionary associating
-    words with frequencies of occurrence
-    """
     word_freqs = {}
     for w in word_list:
         if w in word_freqs:
@@ -23,7 +18,6 @@ def frequencies_imp(word_list):
 
 #
 # Let's write our function bodies as strings.
-# Because we're looking at them from "above"
 #
 extract_words_func_body = "lambda name : [x.lower() for x in re.split('[^a-zA-Z]+', open(name).read()) if len(x) > 0 and x.lower() not in stops]"
 
@@ -50,6 +44,6 @@ exec('sort = ' + sort_func_body)
 #
 word_freqs = locals()['sort'](locals()['frequencies'](locals()['extract_words'](sys.argv[1])))
 
-for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+for (w, c) in word_freqs[0:25]:
+    print w, ' - ', c
 
