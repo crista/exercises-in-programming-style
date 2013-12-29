@@ -17,24 +17,24 @@ def frequencies_imp(word_list):
     return word_freqs
 
 #
-# Let's write our function bodies as strings.
+# Let's write our functions as strings.
 #
-extract_words_func_body = "lambda name : [x.lower() for x in re.split('[^a-zA-Z]+', open(name).read()) if len(x) > 0 and x.lower() not in stops]"
+extract_words_func = "lambda name : [x.lower() for x in re.split('[^a-zA-Z]+', open(name).read()) if len(x) > 0 and x.lower() not in stops]"
 
-frequencies_func_body = "lambda word_list : frequencies_imp(word_list)"
+frequencies_func = "lambda word_list : frequencies_imp(word_list)"
 
-sort_func_body = "lambda word_freq: sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)"
+sort_func = "lambda word_freq: sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)"
 
 #
 # So far, this program isn't much about term-frequency. It's about
-# a bunch of strings that look like function bodies.
+# a bunch of strings that look like functions.
 # Let's add our functions to the "base" program, dynamically.
 # We're re-writing this program by adding more functions to it
 # from "above".
 #
-exec('extract_words = ' + extract_words_func_body)
-exec('frequencies = ' + frequencies_func_body)
-exec('sort = ' + sort_func_body)
+exec('extract_words = ' + extract_words_func)
+exec('frequencies = ' + frequencies_func)
+exec('sort = ' + sort_func)
 
 #
 # The main function. This would work just fine:
