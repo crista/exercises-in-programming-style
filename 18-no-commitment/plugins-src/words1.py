@@ -9,5 +9,6 @@ def extract_words(path_to_file):
     with open('../stop_words.txt') as f:
         stop_words = f.read().split(',')
     stop_words.extend(list(string.ascii_lowercase))
+
     return [w for w in word_list if not w in stop_words]
 
