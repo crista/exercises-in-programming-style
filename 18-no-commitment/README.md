@@ -26,4 +26,4 @@ Possible names:
 
 - No commitment
 - Plugins
-- Why one when we can have many?
+- Dependency injection
