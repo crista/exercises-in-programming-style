@@ -1,11 +1,11 @@
-Style #27
+Style #24
 ==============================
 
 Constraints:
 
-- The input data of the problem is modeled as entities and relations between them
+- The input data of the problem is modeled as entities with relations between them
 
-- The data is placed in tables, with each row potentially cross-referencing rows in other tables
+- The data is placed in tables, with columns potentially cross-referencing data in other tables
 
 - Existence of a relational query engine
 
