@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, re, string, sqlite3
 
 #
@@ -16,38 +15,17 @@ def create_db_schema(connection):
 
 def load_file_into_database(path_to_file, connection):
     """ Takes the path to a file and loads the contents into the database """
-    def _read_file(path_to_file):
-        """
-        Takes a path to a file and returns the entire contents of the 
-        file as a string
-        """
-        f = open(path_to_file)
-        data = f.read()
-        f.close()
-        return data
-
-    def _filter_chars_and_normalize(str_data):
-        """
-        Takes a string and returns a copy with all nonalphanumeric chars
-        replaced by white space, and all characters lower-cased
-        """
+    def _extract_words(path_to_file):
+        with open(path_to_file) as f:
+            str_data = f.read()    
         pattern = re.compile('[\W_]+')
-        return pattern.sub(' ', str_data).lower()
-
-    def _scan(str_data):
-        """ Takes a string and scans for words, returning a list of words. """
-        return str_data.split()
-
-    def _remove_stop_words(word_list):
-        f = open('../stop_words.txt')
-        stop_words = f.read().split(',')
-        f.close()
-        # add single-letter words
+        word_list = pattern.sub(' ', str_data).lower().split()
+        with open('../stop_words.txt') as f:
+            stop_words = f.read().split(',')
         stop_words.extend(list(string.ascii_lowercase))
         return [w for w in word_list if not w in stop_words]
 
-    # The actual work of splitting the input into words
-    words = _remove_stop_words(_scan(_filter_chars_and_normalize(_read_file(path_to_file))))
+    words = _extract_words(path_to_file)
 
     # Now let's add data to the database
     # Add the document itself to the database
