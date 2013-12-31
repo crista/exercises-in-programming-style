@@ -1,22 +1,31 @@
+#!/usr/bin/env python
 import sys, re, itertools, operator
 
 #
-# The columns. Each column comprises of a data element and a formula.
+# The columns. Each column is a data element and a formula.
 # The first 2 columns are the input data, so no formulas.
 #
 all_words = [(), None]
 stop_words = [(), None]
-non_stop_words = [(), lambda : map(lambda w : w if w not in stop_words[0] else '', \
-                                   all_words[0])]
-unique_words = [(), lambda : set([w for w in non_stop_words[0] if w != ''])]
-counts = [(), lambda : map(lambda w, word_list : word_list.count(w), \
-                           unique_words[0], \
-                           itertools.repeat(non_stop_words[0], len(unique_words[0])))]
-sorted_data = [(), lambda : sorted(zip(list(unique_words[0]), counts[0]), 
-                                   key=operator.itemgetter(1), reverse=True)]
+non_stop_words = [(), lambda : \
+                      map(lambda w : \
+                            w if w not in stop_words[0] else '',\
+                          all_words[0])]
+unique_words = [(), lambda : 
+                    set([w for w in non_stop_words[0] if w!=''])]
+counts = [(), lambda : 
+              map(lambda w, word_list : \
+                      word_list.count(w), unique_words[0], \
+                      itertools.repeat(non_stop_words[0], \
+                                       len(unique_words[0])))]
+sorted_data = [(), lambda : sorted(zip(list(unique_words[0]), \
+                                       counts[0]), \
+                                   key=operator.itemgetter(1), 
+                                   reverse=True)]
 
 # The entire spreadsheet
-all_columns = [all_words, stop_words, non_stop_words, unique_words, counts, sorted_data]
+all_columns = [all_words, stop_words, non_stop_words,\
+               unique_words, counts, sorted_data]
 
 #
 # The active procedure over the columns of data.
@@ -29,9 +38,6 @@ def update():
         if c[1] != None:
             c[0] = c[1]() 
 
-#
-# The Main program
-#
 
 # Load the fixed data into the first 2 columns
 all_words[0] = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
