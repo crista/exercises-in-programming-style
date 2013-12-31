@@ -8,16 +8,16 @@ import sys, re, itertools, operator
 all_words = [(), None]
 stop_words = [(), None]
 non_stop_words = [(), lambda : \
-                      map(lambda w : \
+                          map(lambda w : \
                             w if w not in stop_words[0] else '',\
                           all_words[0])]
-unique_words = [(), lambda : 
+unique_words = [(),lambda : 
                     set([w for w in non_stop_words[0] if w!=''])]
 counts = [(), lambda : 
-              map(lambda w, word_list : \
-                      word_list.count(w), unique_words[0], \
-                      itertools.repeat(non_stop_words[0], \
-                                       len(unique_words[0])))]
+              map(lambda w, word_list : word_list.count(w), \
+                  unique_words[0], \
+                  itertools.repeat(non_stop_words[0], \
+                                   len(unique_words[0])))]
 sorted_data = [(), lambda : sorted(zip(list(unique_words[0]), \
                                        counts[0]), \
                                    key=operator.itemgetter(1), 
@@ -45,6 +45,5 @@ stop_words[0] = set(open('../stop_words.txt').read().split(','))
 # Update the columns with formulas
 update()
 
-# Display
 for (w, c) in sorted_data[0][:25]:
     print w, '-', c
