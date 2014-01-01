@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import sys, operator, string
 
 def characters(filename):
@@ -21,7 +20,7 @@ def all_words(filename):
             if c.isalnum():
                 word += c.lower()
             else:
-                # We found the end of a word, emit it
+                # We found end of word, emit it
                 start_char = True
                 yield word
 
@@ -40,9 +39,7 @@ def count_and_sort(filename):
 #
 # The main function
 #
-
 word_freqs = count_and_sort(sys.argv[1])
-
-for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+for (w, c) in word_freqs[0:25]:
+    print w, ' - ', c
 
