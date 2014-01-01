@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import sys, re, string, sqlite3
+import sys, re, string, sqlite3, os.path
 
 #
 # The relational database of this problem consists of 3 tables:
@@ -52,18 +52,18 @@ def load_file_into_database(path_to_file, connection):
     c.close()
 
 #
-# The main function
+# Create if it doesn't exist
 #
-connection = sqlite3.connect(':memory:')
-create_db_schema(connection)
-load_file_into_database(sys.argv[1], connection)
+if not os.path.isfile('tf.db'):
+    with sqlite3.connect('tf.db') as connection:
+        create_db_schema(connection)
+        load_file_into_database(sys.argv[1], connection)
 
 # Now, let's query
-c = connection.cursor()
-c.execute("SELECT value, COUNT(*) as C FROM words GROUP BY value ORDER BY C DESC")
-for i in range(25):
-    row = c.fetchone()
-    if row != None:
-        print row[0] + ' - '  + str(row[1])
-
-connection.close()
+with sqlite3.connect('tf.db') as connection:
+    c = connection.cursor()
+    c.execute("SELECT value, COUNT(*) as C FROM words GROUP BY value ORDER BY C DESC")
+    for i in range(25):
+        row = c.fetchone()
+        if row != None:
+            print row[0] + ' - '  + str(row[1])
