@@ -31,15 +31,18 @@ def non_stop_words(filename):
             yield w
 
 def count_and_sort(filename):
-    freqs = {}
+    freqs, i = {}, 1
     for w in non_stop_words(filename):
         freqs[w] = 1 if w not in freqs else freqs[w]+1
-    return sorted(freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
-
+        if i % 5000 == 0:
+            yield sorted(freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        i = i+1
+    yield sorted(freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
 #
 # The main function
 #
-word_freqs = count_and_sort(sys.argv[1])
-for (w, c) in word_freqs[0:25]:
-    print w, ' - ', c
+for word_freqs in count_and_sort(sys.argv[1]):
+    print "-----------------------------"
+    for (w, c) in word_freqs[0:25]:
+        print w, ' - ', c
 
