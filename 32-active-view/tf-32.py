@@ -11,28 +11,28 @@ lock = threading.Lock()
 class FreqObserver(threading.Thread):
     def __init__(self, freqs):
         threading.Thread.__init__(self)
-        self.daemon = True
-        self._end = False
+        self.daemon,self._end = True, False
         # freqs is the part of the model to be observed
         self._freqs = freqs
-        self._freqs_0 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        self._freqs_0 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]
         self.start()
 
     def run(self):
         while not self._end:
             self._update_view()
             sleep(0.1)
+        self._update_view()
 
     def stop(self):
         self._end = True
 
     def _update_view(self):
         lock.acquire()
-        freqs_1 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        freqs_1 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]
         lock.release()
-        if (freqs_1[0:25] != self._freqs_0[0:25]):
-            self._update_display(freqs_1[0:25])
-        self._freqs_0 = freqs_1
+        if (freqs_1 != self._freqs_0):
+            self._update_display(freqs_1)
+            self._freqs_0 = freqs_1
 
     def _update_display(self, tuples):
         def refresh_screen(data):
