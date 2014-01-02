@@ -16,6 +16,7 @@ class WordFrequenciesModel:
         except IOError:
             print "File not found"
             self.freqs = {}
+
 class WordFrequenciesView:
     def __init__(self, model):
         self._model = model
