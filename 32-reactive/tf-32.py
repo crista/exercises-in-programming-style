@@ -22,7 +22,6 @@ class FreqObserver(threading.Thread):
         while not self._end:
             self._update_view()
             sleep(0.1)
-        self._update_view()
 
     def stop(self):
         self._end = True
@@ -43,8 +42,8 @@ class FreqObserver(threading.Thread):
             sys.stdout.flush()
 
         data_str = ""
-        for tf in tuples:
-            data_str += str(tf[0]) + ' - ' + str(tf[1]) + '\n'
+        for (w, c) in tuples:
+            data_str += str(w) + ' - ' + str(c) + '\n'
         refresh_screen(data_str)
 
 #
