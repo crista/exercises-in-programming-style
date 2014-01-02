@@ -1,36 +1,39 @@
 #!/usr/bin/env python
-
-import sys, operator, string, os, threading
+import sys, operator, string, os, threading, re
 from util import getch, cls, get_input
 from time import sleep
 
 lock = threading.Lock()
 
 #
-# The reactive infrastructure
+# The active view
 #
 class FreqObserver(threading.Thread):
     def __init__(self, freqs):
         threading.Thread.__init__(self)
         self.daemon = True
         self._end = False
-        # freqs is the data to be observed and reacted to
+        # freqs is the part of the model to be observed
         self._freqs = freqs
         self._freqs_0 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
         self.start()
 
     def run(self):
         while not self._end:
-            lock.acquire()
-            freqs_1 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
-            lock.release()
-            if (freqs_1[0:25] != self._freqs_0[0:25]):
-                self._update_display(freqs_1[0:25])
-            self._freqs_0 = freqs_1
-            sleep(0.01)
+            self._update_view()
+            sleep(0.1)
+        self._update_view()
 
     def stop(self):
         self._end = True
+
+    def _update_view(self):
+        lock.acquire()
+        freqs_1 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        lock.release()
+        if (freqs_1[0:25] != self._freqs_0[0:25]):
+            self._update_display(freqs_1[0:25])
+        self._freqs_0 = freqs_1
 
     def _update_display(self, tuples):
         def refresh_screen(data):
@@ -45,69 +48,37 @@ class FreqObserver(threading.Thread):
         refresh_screen(data_str)
 
 #
-# The active part, dataflow-like
+# The model
 #
-def characters():
-    c = f.read(1)
-    if c != "":
-        yield c
-    else:
-        raise StopIteration()
-
-def all_words():
-    found_word = False
-    start_char = True
-    while not found_word:
-        try:
-            c = characters().next()
-        except StopIteration:
-            raise StopIteration()
-
-        if start_char == True:
-            word = ""
-            if c.isalnum():
-                # We found the start of a word
-                word = c.lower()
-                start_char = False
-        else:
-            if c.isalnum():
-                word += c.lower()
-            else:
-                # We found the end of a word, emit it
-                start_char = True
-                found_word = True
-                yield word
-
-def non_stop_words():
-    stopwords = set(open('../stop_words.txt').read().split(',')  + list(string.ascii_lowercase))
-    while True:
-        w = all_words().next()
-        if not w in stopwords:
-            yield w
-
-def count_and_sort():
+class WordsCounter:
     freqs = {}
-    # The declaration for reactive observation of freqs
-    observer = FreqObserver(freqs)
-    # Let's get input from the user, or let her
-    # feed the input automatically
-    while get_input():
-        try:
-            w = non_stop_words().next()
-            lock.acquire()
-            freqs[w] = 1 if w not in freqs else freqs[w]+1
-            lock.release()
-        except StopIteration:
-            # Let's wait for the observer thread to die gracefully
-            observer.stop()
-            sleep(1)
-            break
+    def count(self):
+        def non_stop_words():
+            stopwords = set(open('../stop_words.txt').read().split(',')  + list(string.ascii_lowercase))
+            for line in f:
+                yield [w for w in re.findall('[a-z]{2,}', line.lower()) if w not in stopwords]
+
+        words = non_stop_words().next()
+        lock.acquire()
+        for w in words:
+            self.freqs[w] = 1 if w not in self.freqs else self.freqs[w]+1
+        lock.release()
 
 #
-# The main function
+# The controller
 #
 print "Press space bar to fetch words from the file one by one"
 print "Press ESC to switch to automatic mode"
-with open(sys.argv[1])as f:
-    count_and_sort()
+model = WordsCounter()
+view = FreqObserver(model.freqs)
+with open(sys.argv[1]) as f:
+    while get_input():
+        try:
+            model.count()
+        except StopIteration:
+            # Let's wait for the view thread to die gracefully
+            view.stop()
+            sleep(1)
+            break
+
 
