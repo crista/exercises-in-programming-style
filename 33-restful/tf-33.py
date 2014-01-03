@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import re, string, sys
 
 with open("../stop_words.txt") as f:
@@ -29,7 +28,6 @@ def upload_post_handler(args):
         if filename in data:
             return
         word_freqs = {}
-        print "Trying to open " + filename
         with open(filename) as f:
             for w in [x.lower() for x in re.split("[^a-zA-Z]+", f.read()) if len(x) > 0 and x.lower() not in stops]:
                 word_freqs[w] = word_freqs.get(w, 0) + 1
