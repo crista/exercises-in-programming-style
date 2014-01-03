@@ -9,9 +9,6 @@ Constraints:
 - Each 'thing' is a map from keys to values. Some values
 are procedures/functions.
 
-- When the keys map to procedures/functions, these
-procedures/functions' first argument is the map itself.
-
 Possible names:
 
 - Closed Maps
