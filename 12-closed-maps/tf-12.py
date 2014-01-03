@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import sys, re, operator, string
 
-#
 # Auxiliary functions that can't be lambdas
 #
 def extract_words(obj, path_to_file):
