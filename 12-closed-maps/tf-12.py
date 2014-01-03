@@ -22,29 +22,29 @@ def increment_count(obj, w):
 
 data_storage_obj = {
     'data' : [],
-    'init' : lambda obj, path_to_file : extract_words(obj, path_to_file),
-    'words' : lambda obj : obj['data']
+    'init' : lambda path_to_file : extract_words(data_storage_obj, path_to_file),
+    'words' : lambda : data_storage_obj['data']
 }
 
 stop_words_obj = {
     'stop_words' : [],
-    'init' : lambda obj : load_stop_words(obj),
-    'is_stop_word' : lambda obj, word : word in obj['stop_words']
+    'init' : lambda : load_stop_words(stop_words_obj),
+    'is_stop_word' : lambda word : word in stop_words_obj['stop_words']
 }
 
 word_freqs_obj = {
     'freqs' : {},
-    'increment_count' : lambda obj, w : increment_count(obj, w),
-    'sorted' : lambda obj : sorted(obj['freqs'].iteritems(), key=operator.itemgetter(1), reverse=True)
+    'increment_count' : lambda w : increment_count(word_freqs_obj, w),
+    'sorted' : lambda : sorted(word_freqs_obj['freqs'].iteritems(), key=operator.itemgetter(1), reverse=True)
 }
 
-data_storage_obj['init'](data_storage_obj, sys.argv[1])
-stop_words_obj['init'](stop_words_obj)
+data_storage_obj['init'](sys.argv[1])
+stop_words_obj['init']()
 
-for w in data_storage_obj['words'](data_storage_obj):
-    if not stop_words_obj['is_stop_word'](stop_words_obj, w):
-        word_freqs_obj['increment_count'](word_freqs_obj, w)
+for w in data_storage_obj['words']():
+    if not stop_words_obj['is_stop_word'](w):
+        word_freqs_obj['increment_count'](w)
 
-word_freqs = word_freqs_obj['sorted'](word_freqs_obj)
+word_freqs = word_freqs_obj['sorted']()
 for (w, c) in word_freqs[0:25]:
     print w, ' - ', c
