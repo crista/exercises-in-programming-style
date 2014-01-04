@@ -5,10 +5,10 @@ Constraints:
 
 - Very small amount of primary memory, typically orders of magnitude
   smaller than the data that needs to be processed/generated. 
-  (The example sets the limit to 1024 bytes)
+  (The example sets the limit to 1024 cells)
 
-- No symbols -- i.e. no variable names or labels. All we have is
-  addressable memory.
+- No labels -- i.e. no variable names or tagged memory addresses. All we have is
+  memory that is addressable with numbers.
 
 Possible names:
 
