@@ -40,7 +40,7 @@ data.append(None)  # data[2] is index of the start_char of word
 data.append(0)     # data[3] is index on characters, i = 0
 data.append(False) # data[4] is flag indicating if word was found
 data.append('')    # data[5] is the word
-data.append('')    # data[6] is word,NNNN and then just word
+data.append('')    # data[6] is word,NNNN
 data.append(0)     # data[7] is frequency
 
 # Open the secondary memory
@@ -104,7 +104,7 @@ del data[:]
 
 # Let's use the first 25 entries for the top 25 words
 data = data + [[]]*(25 - len(data))
-data.append('') # data[25] is word,freq from file, and then word
+data.append('') # data[25] is word,freq from file
 data.append(0)  # data[26] is freq
 
 # Loop over secondary memory file
