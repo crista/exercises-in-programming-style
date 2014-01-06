@@ -13,7 +13,7 @@ class TFExercise():
 
 class DataStorageManager(TFExercise):
     """ Models the contents of the file """
-    _data = ''
+    
     def __init__(self, path_to_file):
         with open(path_to_file) as f:
             self._data = f.read()
@@ -22,15 +22,14 @@ class DataStorageManager(TFExercise):
 
     def words(self):
         """ Returns the list words in storage """
-        data_str = ''.join(self._data)
-        return data_str.split()
+        return self._data.split()
 
     def info(self):
         return super(DataStorageManager, self).info() + ": My major data structure is a " + self._data.__class__.__name__
 
 class StopWordManager(TFExercise):
     """ Models the stop word filter """
-    _stop_words = []
+    
     def __init__(self):
         with open('../stop_words.txt') as f:
             self._stop_words = f.read().split(',')
@@ -45,7 +44,9 @@ class StopWordManager(TFExercise):
 
 class WordFrequencyManager(TFExercise):
     """ Keeps the word frequency data """
-    _word_freqs = {}
+    
+    def __init__(self):
+        self._word_freqs = {}
 
     def increment_count(self, word):
         if word in self._word_freqs:
