@@ -32,7 +32,7 @@ class WordFrequencyController extends TFExercise {
     }
     
     public void run() {
-        for (String word : this.storageManager.calculateWords()) {
+        for (String word : this.storageManager.getWords()) {
             if (!this.stopWordManager.isStopWord(word)) {
                 this.wordFreqManager.incrementCount(word);
             }
@@ -52,27 +52,28 @@ class WordFrequencyController extends TFExercise {
 
 /** Models the contents of the file. */
 class DataStorageManager extends TFExercise {
-    private String data;
+    private List<String> words;
     
     public DataStorageManager(String pathToFile) throws IOException {
-        byte[] dataBytes;
-        RandomAccessFile f = new RandomAccessFile(new File(pathToFile), "r");
+        this.words = new ArrayList<String>();
+        
+        Scanner f = new Scanner(new File(pathToFile), "UTF-8");
         try {
-            dataBytes = new byte[(int) f.length()];
-            f.readFully(dataBytes);
+            f.useDelimiter("[\\W_]+");
+            while (f.hasNext()) {
+                this.words.add(f.next().toLowerCase());
+            }
         } finally {
             f.close();
         }
-        
-        this.data = new String(dataBytes, "UTF-8").replaceAll("[\\W_]+", " ").toLowerCase();
     }
     
-    public String[] calculateWords() {
-        return this.data.split("\\s+");
+    public List<String> getWords() {
+        return this.words;
     }
     
     public String getInfo() {
-        return super.getInfo() + ": My major data structure is a " + this.data.getClass().getName();
+        return super.getInfo() + ": My major data structure is a " + this.words.getClass().getName();
     }
 }
 
