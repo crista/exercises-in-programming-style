@@ -1,4 +1,4 @@
-Style #25
+Style #24
 ==============================
 
 This style is a variation of style #09, The One, with the following additional constraints:
