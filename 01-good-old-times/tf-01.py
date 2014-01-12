@@ -52,7 +52,6 @@ while True:
     data[1] = [f.readline()] 
     if data[1] == ['']: # end of input file
         break
-    
     if data[1][0][len(data[1][0])-1] != '\n': # If it does not end with \n
         data[1][0] = data[1][0] + '\n' # Add \n
     data[2] = None
@@ -68,7 +67,6 @@ while True:
                 # We found the end of a word. Process it
                 data[4] = False 
                 data[5] = data[1][0][data[2]:data[3]].lower()
-
                 # Ignore words with len < 2, and stop words
                 if len(data[5]) >= 2 and data[5] not in data[0]:
                     # Let's see if it already exists
@@ -83,16 +81,13 @@ while True:
                             data[7] += 1
                             data[4] = True
                             break
-
                     if not data[4]:
                         word_freqs.seek(0, 1) # Needed in Windows
                         word_freqs.writelines("%20s,%04d\n" % (data[5], 1))
                     else:
                         word_freqs.seek(-26, 1)
                         word_freqs.writelines("%20s,%04d\n" % (data[5], data[7]))
-
                     word_freqs.seek(0,0)
-
                 # Let's reset
                 data[2] = None
         data[3] += 1
