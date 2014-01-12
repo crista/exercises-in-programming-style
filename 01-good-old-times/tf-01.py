@@ -52,6 +52,9 @@ while True:
     data[1] = [f.readline()] 
     if data[1] == ['']: # end of input file
         break
+    
+    if data[1][0][len(data[1][0])-1] != '\n': # If it does not end with \n
+        data[1][0] = data[1][0] + '\n' # Add \n
     data[2] = None
     data[3] = 0 
     # Loop over characters in the line
@@ -123,6 +126,6 @@ while True:
             
 for tf in data[0:25]: # elimination of symbol tf is exercise
     if len(tf) == 2:
-        print tf[0], ' - ', tf[1]
+        print(tf[0], ' - ', tf[1])
 # We're done
 word_freqs.close()
