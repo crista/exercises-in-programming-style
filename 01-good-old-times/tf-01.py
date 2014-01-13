@@ -121,6 +121,6 @@ while True:
             
 for tf in data[0:25]: # elimination of symbol tf is exercise
     if len(tf) == 2:
-        print(tf[0], ' - ', tf[1])
+        print tf[0], ' - ', tf[1]
 # We're done
 word_freqs.close()
