@@ -93,7 +93,6 @@ def sort():
     # Not in style, left as exercise
     stack.extend(sorted(stack.pop().iteritems(), key=operator.itemgetter(1)))
 
-#
 # The main function
 #
 stack.append(sys.argv[1])

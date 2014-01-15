@@ -15,9 +15,8 @@ def read_file(path_to_file):
     contents of the file to the global variable data
     """
     global data
-    f = open(path_to_file)
-    data = data + list(f.read())
-    f.close()
+    with open(path_to_file) as f:
+        data = data + list(f.read())
 
 def filter_chars_and_normalize():
     """
@@ -41,9 +40,8 @@ def scan():
 
 def remove_stop_words():
     global words
-    f = open('../stop_words.txt')
-    stop_words = f.read().split(',')
-    f.close()
+    with open('../stop_words.txt') as f:
+        stop_words = f.read().split(',')
     # add single-letter words
     stop_words.extend(list(string.ascii_lowercase))
     indexes = []
