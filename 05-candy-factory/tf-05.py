@@ -60,11 +60,16 @@ def sort(word_freq):
     """
     return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
 
+def print_all(word_freqs):
+    """
+    Takes a list of pairs where the entries are sorted by frequency and print them recursively.
+    """
+    if(len(word_freqs) > 0):
+        print word_freqs[0][0], ' - ', word_freqs[0][1]
+        print_all(word_freqs[1:]);
+
 #
 # The main function
 #
-word_freqs = sort(frequencies(remove_stop_words(scan(filter_chars_and_normalize(read_file(sys.argv[1]))))))
-
-for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+print_all(sort(frequencies(remove_stop_words(scan(filter_chars_and_normalize(read_file(sys.argv[1]))))))[0:25])
 
