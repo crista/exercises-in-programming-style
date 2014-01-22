@@ -6,4 +6,4 @@
                 (remove 
                   #(contains? (set (.split (slurp "../stop_words.txt") ",")) %)
                   (re-seq #"[a-z]{2,}" (.toLowerCase (slurp (first *command-line-args*))))))))]
-  (printf "%s - %d\n" (first c) (nth c 1)))
+  (println (first c) "-" (nth c 1)))
