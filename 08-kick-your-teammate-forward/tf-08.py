@@ -33,15 +33,12 @@ def frequencies(word_list, func):
             wf[w] += 1
         else:
             wf[w] = 1
-    func(wf, format)
+    func(wf, format_text)
 
 def sort(wf, func):
     func(sorted(wf.iteritems(), key=operator.itemgetter(1), reverse=True), print_all)
 
-def no_op(func):
-    return
-
-def format(word_freqs, func):
+def format_text(word_freqs, func):
     text = ""
     for (w, c) in word_freqs[0:25]:
         text = text + w + ' - ' + str(c) + '\n'
@@ -51,6 +48,9 @@ def print_all(text, func):
     print text
     func(None) 
     
+def no_op(func):
+    return
+
 #
 # The main function
 #
