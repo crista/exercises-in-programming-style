@@ -5,10 +5,10 @@ import sys, re, operator, string
 # The PassiveAggressive class for this example
 #
 class TFPassiveAggressive:
-    def __init__(self, v):
+    def __init__(self):
         self._e = None
         self._offending_func = None
-        self._value = v
+        self._value = None
 
     def bind(self, func):
         if self._e == None:
@@ -28,7 +28,7 @@ class TFPassiveAggressive:
 #
 # The functions
 #
-def get_input(arg):
+def get_input(ignore):
     assert(len(sys.argv) > 1), "You idiot! I need an input file! I quit!"
     return sys.argv[1]
 
@@ -81,5 +81,4 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-TFPassiveAggressive(None).bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
-
+TFPassiveAggressive().bind(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
