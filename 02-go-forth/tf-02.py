@@ -87,7 +87,7 @@ def frequencies():
 
     # Push the result onto the stack
     stack.append(heap['word_freqs'])
-    del heap['word_freqs'] # We dont need this variable anymore
+    del heap['word_freqs'] # We don't need this variable anymore
 
 def sort():
     # Not in style, left as exercise
