@@ -11,5 +11,5 @@ Constraints:
 
 Possible names:
 
-- Inverse multiplexer (check out electronics)
 - Map-reduce
+- Inverse multiplexer (check out electronics)

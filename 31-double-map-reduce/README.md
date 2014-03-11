@@ -1,7 +1,7 @@
 Style #31
 ==============================
 
-Very similar to style #29, but with an additional twist
+Very similar to style #30, but with an additional twist
 
 Constraints:
 
@@ -17,6 +17,6 @@ Constraints:
 
 Possible names:
 
-- Double inverse multiplexer 
 - Map-reduce 
 - Hadoop style
+- Double inverse multiplexer 
