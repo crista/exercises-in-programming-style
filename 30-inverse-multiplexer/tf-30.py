@@ -38,7 +38,7 @@ def split_words(data_str):
 
 def count_words(pairs_list_1, pairs_list_2):
     """ 
-    Takes a two lists of pairs of the form
+    Takes two lists of pairs of the form
     [(w1, 1), ...]
     and returns a list of pairs [(w1, frequency), ...], 
     where frequency is the sum of all the reported occurrences
