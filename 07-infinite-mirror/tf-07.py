@@ -4,7 +4,8 @@ import re, sys, operator
 # Mileage may vary. If this crashes, make it lower
 RECURSION_LIMIT = 9500
 # We add a few more, because, contrary to the name,
-# this doesn't just rule recursion: it rules the depth of the call stack
+# this doesn't just rule recursion: it rules the 
+# depth of the call stack
 sys.setrecursionlimit(RECURSION_LIMIT+10)
 
 def count(word_list, stopwords, wordfreqs):
