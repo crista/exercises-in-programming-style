@@ -11,29 +11,24 @@ def count(word_list, stopwords, wordfreqs):
     # What to do with an empty list
     if word_list == []:
         return
-    # The base case, what to do with 1 word
-    if len(word_list) == 1:
+    # The inductive case, what to do with a list of words
+    else:
+        # Process the head word
         word = word_list[0]
         if word not in stopwords:
             if word in word_freqs:
                 wordfreqs[word] += 1
             else:
                 wordfreqs[word] = 1
-    # The inductive case, what to do with a list of words
-    else:
-        # Process the head word
-        count([word_list[0]], stopwords, wordfreqs)
         # Process the tail 
         count(word_list[1:], stopwords, wordfreqs)
 
 def wf_print(wordfreq):
     if wordfreq == []:
         return
-    if len(wordfreq) == 1:
+    else:
         (w, c) = wordfreq[0]
         print w, '-', c
-    else:
-        wf_print([wordfreq[0]])
         wf_print(wordfreq[1:])
 
 stop_words = set(open('../stop_words.txt').read().split(','))
