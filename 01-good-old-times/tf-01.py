@@ -21,7 +21,7 @@ data = []
 # If these two assumptions didn't hold, the algorithm would 
 # need to be changed considerably.
 
-# Overall stragety: (PART 1) read the input file, count the 
+# Overall strategy: (PART 1) read the input file, count the 
 # words, increment/store counts in secondary memory (a file) 
 # (PART 2) find the 25 most frequent words in secondary memory
 
