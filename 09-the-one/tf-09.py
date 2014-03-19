@@ -61,5 +61,14 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-TFTheOne(sys.argv[1]).bind(read_file).bind(filter_chars).bind(normalize).bind(scan).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs).printme()
+TFTheOne(sys.argv[1])\
+.bind(read_file)\
+.bind(filter_chars)\
+.bind(normalize)\
+.bind(scan)\
+.bind(remove_stop_words)\
+.bind(frequencies)\
+.bind(sort)\
+.bind(top25_freqs)\
+.printme()
 
