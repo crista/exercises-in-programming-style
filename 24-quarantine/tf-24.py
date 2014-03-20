@@ -68,6 +68,11 @@ def top25_freqs(word_freqs):
 #
 # The main function
 #
-quarantine = TFQuarantine(get_input).bind(extract_words).bind(remove_stop_words).bind(frequencies).bind(sort).bind(top25_freqs)
-quarantine.execute()
+TFQuarantine(get_input)\
+.bind(extract_words)\
+.bind(remove_stop_words)\
+.bind(frequencies)\
+.bind(sort)\
+.bind(top25_freqs)\
+.execute()
 
