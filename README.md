@@ -7,6 +7,9 @@ with the following command line:
 
 $ python tf-NN.py ../pride-and-prejudice.txt
 
+Explanations and historical context for all these styles can be found in the
+companion book [Exercises in Programming Style](http://www.amazon.com/Exercises-Programming-Style-Cristina-Videira/dp/1482227371/).
+
 Additions are welcome! 
 
 You can contribute: 
