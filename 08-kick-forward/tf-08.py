@@ -5,7 +5,7 @@ import sys, re, operator, string
 # The functions
 #
 def read_file(path_to_file, func):
-    with  open(path_to_file) as f:
+    with open(path_to_file) as f:
         data = f.read()
     func(data, normalize)
 
