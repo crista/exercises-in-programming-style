@@ -17,7 +17,7 @@ def count(word_list, stopwords, wordfreqs):
         # Process the head word
         word = word_list[0]
         if word not in stopwords:
-            if word in word_freqs:
+            if word in wordfreqs:
                 wordfreqs[word] += 1
             else:
                 wordfreqs[word] = 1
