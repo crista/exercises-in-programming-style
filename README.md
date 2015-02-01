@@ -13,21 +13,19 @@ companion book [Exercises in Programming Style](http://www.amazon.com/Exercises-
 Additions are welcome! 
 
 You can contribute: 
-- an example program that follows one of the existing styles, but written in a
-  different programming language 
+- new exercises related to the existing styles
 - an entirely new programming style
 - new names for the existing styles
 - discussion of names, pros and cons of each style
 
+Because this project and the companion book are used in courses, at the
+suggestion of several students I am no longer accepting contributions 
+of the existing styles written in different programming languages. 
+That is the first exercise that the students do. Having the solutions
+easily available here will rob future students of the learning experience!
+
 Please follow the conventions suggested by the existing code base,
-specifically:
-
-- If you are contributing a program in a different programming language,
-add that file to the corresponding style folder and call it tf-nn.ext,
-where nn is the style number and ext is the language's standard
-extension suffix.
-
-- If you are contributing a new style, make a new folder called
+specifically, if you are contributing a new style, make a new folder called
 nn-funname and add an example program in that folder called
 tf-nn.ext. (nn is the next avalaible number in the collection)
 Additionally, add a README.md file that clearly describes the
