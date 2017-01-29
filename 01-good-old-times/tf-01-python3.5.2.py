@@ -48,7 +48,7 @@ data.append(0)      # data[7] is frequency
 # Open the secondary memory
 word_freqs = touchopen('word_freqs', 'rb+')
 # Open the input file
-f = open('../pride-and-prejudice.txt', encoding="utf-8")
+f = open(sys.argv[1])
 # Loop over input file's lines
 while True:
     data[1] = [f.readline()]
