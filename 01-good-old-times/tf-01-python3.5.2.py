@@ -1,5 +1,5 @@
 
-import sys, os, string, re
+import sys, os, string
 
 # Utility for handling the intermediate 'secondary memory'
 def touchopen(filename, *args, **kwargs):
