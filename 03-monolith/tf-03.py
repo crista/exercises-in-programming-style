@@ -30,7 +30,6 @@ for line in open(sys.argv[1]):
                         if word == pair[0]:
                             pair[1] += 1
                             found = True
-                            found_at = pair_index
                             break
                         pair_index += 1
                     if not found:
