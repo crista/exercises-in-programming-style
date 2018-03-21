@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string, time
 
 #
@@ -32,7 +33,7 @@ def profile(f):
         start_time = time.time()
         ret_value = f(*arg, **kw)
         elapsed = time.time() - start_time
-        print "%s(...) took %s secs" % (f.__name__, elapsed)
+        print("%s(...) took %s secs" % (f.__name__, elapsed))
         return ret_value
     return profilewrapper
 
@@ -40,10 +41,10 @@ def profile(f):
 tracked_functions = [extract_words, frequencies, sort]
 # weaver
 for func in tracked_functions:
-    globals()[func.func_name]=profile(func)
+    globals()[func.__name__]=profile(func)
 
 word_freqs = sort(frequencies(extract_words(sys.argv[1])))
 
 for (w, c) in word_freqs[0:25]:
-    print w, ' - ', c
+    print(w, ' - ', c)
 

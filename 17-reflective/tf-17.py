@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string, os
 
 #
@@ -44,5 +45,5 @@ exec('sort = ' + sort_func)
 word_freqs = locals()['sort'](locals()['frequencies'](locals()['extract_words'](filename)))
 
 for (w, c) in word_freqs[0:25]:
-    print w, ' - ', c
+    print(w, ' - ', c)
 

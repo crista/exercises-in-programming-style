@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -13,7 +14,7 @@ class TFTheOne:
         return self
 
     def printme(self):
-        print self._value
+        print(self._value)
 
 #
 # The functions

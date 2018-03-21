@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys, re, operator, string, traceback
 
 #
@@ -13,7 +14,7 @@ def extract_words(path_to_file):
         with open(path_to_file) as f:
             str_data = f.read()
     except IOError as e:
-        print "I/O error({0}) when opening {1}: {2}! I quit!".format(e.errno, path_to_file, e.strerror)
+        print("I/O error({0}) when opening {1}: {2}! I quit!".format(e.errno, path_to_file, e.strerror))
         raise e
     
     pattern = re.compile('[\W_]+')
@@ -27,7 +28,7 @@ def remove_stop_words(word_list):
         with open('../stop_words.txt') as f:
             stop_words = f.read().split(',')
     except IOError as e:
-        print "I/O error({0}) when opening ../stops_words.txt: {1}! I quit!".format(e.errno, e.strerror)
+        print("I/O error({0}) when opening ../stops_words.txt: {1}! I quit!".format(e.errno, e.strerror))
         raise e
 
     stop_words.extend(list(string.ascii_lowercase))
@@ -35,7 +36,7 @@ def remove_stop_words(word_list):
 
 def frequencies(word_list):
     assert(type(word_list) is list), "I need a list!"
-    assert(word_list <> []), "I need a non-empty list!"
+    assert(word_list != []), "I need a non-empty list!"
 
     word_freqs = {}
     for w in word_list:
@@ -47,12 +48,12 @@ def frequencies(word_list):
 
 def sort(word_freq):
     assert(type(word_freq) is dict), "I need a dictionary!"
-    assert(word_freq <> {}), "I need a non-empty dictionary!"
+    assert(word_freq != {}), "I need a non-empty dictionary!"
 
     try:
         return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
     except Exception as e:
-        print "Sorted threw {0}: {1}".format(e)
+        print("Sorted threw {0}: {1}".format(e))
         raise e
 
 #
@@ -65,8 +66,8 @@ try:
     assert(type(word_freqs) is list), "OMG! This is not a list!"
     assert(len(word_freqs) > 25), "SRSLY? Less than 25 words!"
     for (w, c) in word_freqs[0:25]:
-        print w, ' - ', c
+        print(w, ' - ', c)
 except Exception as e:
-    print "Something wrong: {0}".format(e)
+    print("Something wrong: {0}".format(e))
     traceback.print_exc()
     

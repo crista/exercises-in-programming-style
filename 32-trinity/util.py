@@ -1,4 +1,4 @@
-import sys, os
+import os
 
 #
 # getch in a platform-independent way
@@ -65,11 +65,10 @@ def get_input():
     if not interactive:
         return True
 
-    while True: 
+    while True:
         key = ord(getch())
         if key == 32: # space bar
             return True
         elif key == 27: # ESC
             interactive = False
             return True
-

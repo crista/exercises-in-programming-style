@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, string, sqlite3, os.path
 
 #
@@ -66,4 +67,4 @@ with sqlite3.connect('tf.db') as connection:
     for i in range(25):
         row = c.fetchone()
         if row != None:
-            print row[0] + ' - '  + str(row[1])
+            print(row[0] + ' - '  + str(row[1]))

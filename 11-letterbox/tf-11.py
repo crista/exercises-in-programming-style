@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 class DataStorageManager():
@@ -89,7 +90,7 @@ class WordFrequencyController():
 
         word_freqs = self._word_freq_manager.dispatch(['sorted'])
         for (w, c) in word_freqs[0:25]:
-            print w, ' - ', c
+            print(w, ' - ', c)
 
 #
 # The main function

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys, string
 # the global list of [word, frequency] pairs
 word_freqs = []
@@ -47,5 +48,5 @@ for line in open(sys.argv[1]):
         i += 1
 
 for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+    print(tf[0], ' - ', tf[1])
 

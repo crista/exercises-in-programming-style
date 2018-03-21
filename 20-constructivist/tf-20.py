@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string, inspect
 
 #
@@ -12,7 +13,7 @@ def extract_words(path_to_file):
         with open(path_to_file) as f:
             str_data = f.read()
     except IOError as e:
-        print "I/O error({0}) when opening {1}: {2}".format(e.errno, path_to_file, e.strerror)
+        print("I/O error({0}) when opening {1}: {2}".format(e.errno, path_to_file, e.strerror))
         return []
     
     pattern = re.compile('[\W_]+')
@@ -27,7 +28,7 @@ def remove_stop_words(word_list):
         with open('../stop_words.txt') as f:
             stop_words = f.read().split(',')
     except IOError as e:
-        print "I/O error({0}) when opening ../stops_words.txt: {1}".format(e.errno, e.strerror)
+        print("I/O error({0}) when opening ../stops_words.txt: {1}".format(e.errno, e.strerror))
         return word_list
 
     stop_words.extend(list(string.ascii_lowercase))
@@ -58,5 +59,5 @@ filename = sys.argv[1] if len(sys.argv) > 1 else "../input.txt"
 word_freqs = sort(frequencies(remove_stop_words(extract_words(filename))))
 
 for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
+    print(tf[0], ' - ', tf[1])
 

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, itertools, operator
 
 #
@@ -46,4 +47,4 @@ stop_words[0] = set(open('../stop_words.txt').read().split(','))
 update()
 
 for (w, c) in sorted_data[0][:25]:
-    print w, '-', c
+    print(w, '-', c)

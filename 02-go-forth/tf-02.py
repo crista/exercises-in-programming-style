@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -104,7 +105,7 @@ stack.append(0)
 # the last word there will be one item left
 while stack[-1] < 25 and len(stack) > 1:
     heap['i'] = stack.pop()
-    (w, f) = stack.pop(); print w, ' - ', f
+    (w, f) = stack.pop(); print(w, ' - ', f)
     stack.append(heap['i']); stack.append(1)
     stack.append(stack.pop() + stack.pop())
 

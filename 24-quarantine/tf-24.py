@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -19,7 +20,7 @@ class TFQuarantine:
         value = lambda : None
         for func in self._funcs:
             value = func(guard_callable(value))
-        print guard_callable(value)
+        print(guard_callable(value))
 
 #
 # The functions

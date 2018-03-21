@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, operator, string, os, threading, re
 from util import getch, cls, get_input
 from time import sleep
@@ -38,7 +39,7 @@ class FreqObserver(threading.Thread):
         def refresh_screen(data):
             # clear screen
             cls()
-            print data
+            print(data)
             sys.stdout.flush()
 
         data_str = ""
@@ -57,7 +58,7 @@ class WordsCounter:
             for line in f:
                 yield [w for w in re.findall('[a-z]{2,}', line.lower()) if w not in stopwords]
 
-        words = non_stop_words().next()
+        words = next(non_stop_words())
         lock.acquire()
         for w in words:
             self.freqs[w] = 1 if w not in self.freqs else self.freqs[w]+1
@@ -66,8 +67,8 @@ class WordsCounter:
 #
 # The controller
 #
-print "Press space bar to fetch words from the file one by one"
-print "Press ESC to switch to automatic mode"
+print("Press space bar to fetch words from the file one by one")
+print("Press ESC to switch to automatic mode")
 model = WordsCounter()
 view = FreqObserver(model.freqs)
 with open(sys.argv[1]) as f:

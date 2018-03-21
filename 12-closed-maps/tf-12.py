@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 # Auxiliary functions that can't be lambdas
@@ -46,4 +47,4 @@ for w in data_storage_obj['words']():
 
 word_freqs = word_freqs_obj['sorted']()
 for (w, c) in word_freqs[0:25]:
-    print w, ' - ', c
+    print(w, ' - ', c)
