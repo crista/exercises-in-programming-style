@@ -9,15 +9,15 @@ class ActiveWFObject(Thread):
         Thread.__init__(self)
         self.name = str(type(self))
         self.queue = Queue()
-        self._stop = False
+        self._stopMe = False
         self.start()
 
     def run(self):
-        while not self._stop:
+        while not self._stopMe:
             message = self.queue.get()
             self._dispatch(message)
             if message[0] == 'die':
-                self._stop = True
+                self._stopMe = True
 
 def send(receiver, message):
     receiver.queue.put(message)
@@ -116,7 +116,7 @@ class WordFrequencyController(ActiveWFObject):
         for (w, f) in word_freqs[0:25]:
             print w, ' - ', f
         send(self._storage_manager, ['die'])
-        self._stop = True
+        self._stopMe = True
 
 #
 # The main function
