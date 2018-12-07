@@ -47,7 +47,7 @@ data.append(0)     # data[7] is frequency
 # Open the secondary memory
 word_freqs = touchopen('word_freqs', 'rb+')
 # Open the input file
-f = open(sys.argv[1])
+f = open(sys.argv[1], 'r')
 # Loop over input file's lines
 while True:
     data[1] = [f.readline()] 
@@ -72,7 +72,7 @@ while True:
                 if len(data[5]) >= 2 and data[5] not in data[0]:
                     # Let's see if it already exists
                     while True:
-                        data[6] = word_freqs.readline().strip()
+                        data[6] = str(word_freqs.readline().strip(), 'utf-8')
                         if data[6] == '':
                             break;
                         data[7] = int(data[6].split(',')[1])
@@ -84,10 +84,10 @@ while True:
                             break
                     if not data[4]:
                         word_freqs.seek(0, 1) # Needed in Windows
-                        word_freqs.writelines("%20s,%04d\n" % (data[5], 1))
+                        word_freqs.write(bytes("%20s,%04d\n" % (data[5], 1), 'utf-8'))
                     else:
                         word_freqs.seek(-26, 1)
-                        word_freqs.writelines("%20s,%04d\n" % (data[5], data[7]))
+                        word_freqs.write(bytes("%20s,%04d\n" % (data[5], data[7]), 'utf-8'))
                     word_freqs.seek(0,0)
                 # Let's reset
                 data[2] = None
@@ -108,7 +108,7 @@ data.append(0)  # data[26] is freq
 
 # Loop over secondary memory file
 while True:
-    data[25] = word_freqs.readline().strip()
+    data[25] = str(word_freqs.readline().strip(), 'utf-8')
     if data[25] == '': # EOF
         break
     data[26] = int(data[25].split(',')[1]) # Read it as integer
