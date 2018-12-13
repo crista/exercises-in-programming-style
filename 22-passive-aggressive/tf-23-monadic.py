@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -21,9 +22,9 @@ class TFPassiveAggressive:
 
     def printme(self):
         if self._e == None:
-            print self._value
+            print(self._value)
         else:
-            print self._e, " in ", self._offending_func.__name__
+            print(self._e, " in ", self._offending_func.__name__)
 
 #
 # The functions
@@ -53,7 +54,7 @@ def remove_stop_words(word_list):
 
 def frequencies(word_list):
     assert(type(word_list) is list), "I need a list! I quit!"
-    assert(word_list <> []), "I need a non-empty list! I quit!"
+    assert(word_list != []), "I need a non-empty list! I quit!"
 
     word_freqs = {}
     for w in word_list:
@@ -65,13 +66,13 @@ def frequencies(word_list):
 
 def sort(word_freqs):
     assert(type(word_freqs) is dict), "I need a dictionary! I quit!"
-    assert(word_freqs <> {}), "I need a non-empty dictionary! I quit!"
+    assert(word_freqs != {}), "I need a non-empty dictionary! I quit!"
 
     return sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
 
 def top25_freqs(word_freqs):
     assert(type(word_freqs) is list), "I need a list! I quit!"
-    assert(word_freqs <> {}), "I need a non-empty dictionary! I quit!"
+    assert(word_freqs != {}), "I need a non-empty dictionary! I quit!"
 
     top25 = ""
     for tf in word_freqs[0:25]:

@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import re, sys, operator, Queue, threading
 
 # Two data spaces
@@ -49,4 +50,4 @@ while not freq_space.empty():
         word_freqs[k] = count
         
 for (w, c) in sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]:
-    print w, '-', c
+    print(w, '-', c)

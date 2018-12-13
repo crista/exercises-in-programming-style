@@ -1,11 +1,19 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
+from functools import reduce
+
+try:
+    xrange          # Python 2
+except NameError:
+    xrange = range  # Python 3
+
 
 #
 # Functions for map reduce
 #
 def partition(data_str, nlines):
-    """ 
+    """
     Partitions the input data_str (a big string)
     into chunks of nlines.
     """
@@ -14,8 +22,8 @@ def partition(data_str, nlines):
         yield '\n'.join(lines[i:i+nlines])
 
 def split_words(data_str):
-    """ 
-    Takes a string,  returns a list of pairs (word, 1), 
+    """
+    Takes a string,  returns a list of pairs (word, 1),
     one for each word in the input, so
     [(w1, 1), (w2, 1), ..., (wn, 1)]
     """
@@ -37,10 +45,10 @@ def split_words(data_str):
     return result
 
 def count_words(pairs_list_1, pairs_list_2):
-    """ 
+    """
     Takes two lists of pairs of the form
     [(w1, 1), ...]
-    and returns a list of pairs [(w1, frequency), ...], 
+    and returns a list of pairs [(w1, frequency), ...],
     where frequency is the sum of all the reported occurrences
     """
     mapping = dict((k, v) for k, v in pairs_list_1)
@@ -70,5 +78,4 @@ splits.insert(0, []) # Normalize input to reduce
 word_freqs = sort(reduce(count_words, splits))
 
 for (w, c) in word_freqs[0:25]:
-    print w, ' - ', c
-
+    print(w, ' - ', c)

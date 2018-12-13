@@ -1,10 +1,16 @@
 #!/usr/local/bin/python
 #
 #   f o r t h . p y
-#   Author: Chris Meyers @ 
+#   Author: Chris Meyers @
 #           http://openbookproject.net/py4fun/forth/forth.html
 #
-import sys, re
+from __future__ import print_function
+import re
+
+try:
+    raw_input          # Python 2
+except NameError:
+    raw_input = input  # Python 3
 
 ds       = []          # The data stack
 cStack   = []          # The control struct stack
@@ -15,14 +21,14 @@ words    = []          # The input stream of tokens
 def main() :
     while 1 :
         pcode = compile()          # compile/run from user
-        if pcode == None : print; return
+        if pcode == None : print(); return
         execute(pcode)
 
 #============================== Lexical Parsing
-        
+
 def getWord (prompt="... ") :
     global words
-    while not words : 
+    while not words :
         try    : lin = raw_input(prompt)+"\n"
         except : return None
         if lin[0:1] == "@" : lin = open(lin[1:-1]).read()
@@ -56,8 +62,8 @@ def rSwap(cod,p) : a=ds.pop(); b=ds.pop(); ds.append(a); ds.append(b)
 def rDup (cod,p) : ds.append(ds[-1])
 def rDrop(cod,p) : ds.pop()
 def rOver(cod,p) : ds.append(ds[-2])
-def rDump(cod,p) : print "ds = ", ds
-def rDot (cod,p) : print ds.pop()
+def rDump(cod,p) : print("ds = ", ds)
+def rDot (cod,p) : print(ds.pop())
 def rJmp (cod,p) : return cod[p]
 def rJnz (cod,p) : return (cod[p],p+1)[ds.pop()]
 def rJz  (cod,p) : return (p+1,cod[p])[ds.pop()==0]
@@ -92,7 +98,7 @@ rDict = {
 
   'create': rCreate, 'does>': rDoes,
 }
-#================================= Compile time 
+#================================= Compile time
 
 def compile() :
     pcode = []; prompt = "Forth> "
@@ -114,12 +120,12 @@ def compile() :
             try : pcode.append(int(word))
             except :
                 try: pcode.append(float(word))
-                except : 
+                except :
                     pcode[-1] = rRun     # Change rPush to rRun
                     pcode.append(word)   # Assume word will be defined
         if not cStack : return pcode
         prompt = "...    "
-    
+
 def fatal (mesg) : raise mesg
 
 def cColon (pcode) :
@@ -168,5 +174,5 @@ cDict = {
   ':'    : cColon, ';'    : cSemi, 'if': cIf, 'else': cElse, 'then': cThen,
   'begin': cBegin, 'until': cUntil,
 }
-  
+
 if __name__ == "__main__" : main()

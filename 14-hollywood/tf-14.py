@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -89,7 +90,7 @@ class WordFrequencyCounter:
     def __print_freqs(self):
         word_freqs = sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
         for (w, c) in word_freqs[0:25]:
-            print w, ' - ', c
+            print(w, ' - ', c)
 
 #
 # The main function

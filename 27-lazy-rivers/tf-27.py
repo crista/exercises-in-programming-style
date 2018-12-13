@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, operator, string
 
 def characters(filename):
@@ -42,7 +43,7 @@ def count_and_sort(filename):
 # The main function
 #
 for word_freqs in count_and_sort(sys.argv[1]):
-    print "-----------------------------"
+    print("-----------------------------")
     for (w, c) in word_freqs[0:25]:
-        print w, ' - ', c
+        print(w, ' - ', c)
 

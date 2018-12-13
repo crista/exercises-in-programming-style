@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
 import sys, re, operator, string
 from threading import Thread
 from Queue import Queue
@@ -114,7 +115,7 @@ class WordFrequencyController(ActiveWFObject):
     def _display(self, message):
         word_freqs = message[0]
         for (w, f) in word_freqs[0:25]:
-            print w, ' - ', f
+            print(w, ' - ', f)
         send(self._storage_manager, ['die'])
         self._stopMe = True
 

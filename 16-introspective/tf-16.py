@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string, inspect
 
 def read_stop_words():
@@ -39,7 +40,7 @@ def sort(word_freq):
 def main():
     word_freqs = sort(frequencies(extract_words(sys.argv[1])))
     for (w, c) in word_freqs[0:25]:
-        print w, ' - ', c
+        print(w, ' - ', c)
 
 if __name__ == "__main__":
     main()

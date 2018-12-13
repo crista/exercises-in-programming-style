@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, string
 
 # The shared mutable data
@@ -54,7 +55,7 @@ def remove_stop_words():
 def frequencies():
     """
     Creates a list of pairs associating
-    words with frequencies 
+    words with frequencies
     """
     global words
     global word_freqs
@@ -70,7 +71,7 @@ def sort():
     Sorts word_freqs by frequency
     """
     global word_freqs
-    word_freqs.sort(lambda x, y: cmp(y[1], x[1]))
+    word_freqs.sort(key=lambda x: x[1], reverse=True)
 
 
 #
@@ -84,5 +85,4 @@ frequencies()
 sort()
 
 for tf in word_freqs[0:25]:
-    print tf[0], ' - ', tf[1]
-
+    print(tf[0], ' - ', tf[1])

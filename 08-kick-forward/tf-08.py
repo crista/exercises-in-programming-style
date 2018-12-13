@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -40,7 +41,7 @@ def sort(wf, func):
 
 def print_text(word_freqs, func):
     for (w, c) in word_freqs[0:25]:
-        print w, "-", c
+        print(w, "-", c)
     func(None)
 
 def no_op(func):

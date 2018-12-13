@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import sys, re, operator, string, inspect
 
 #
@@ -11,7 +12,7 @@ class AcceptTypes():
     def __call__(self, f):
         def wrapped_f(*args):
             for i in range(len(self._args)):
-                if type(args[i]) <> self._args[i]:
+                if type(args[i]) != self._args[i]:
                     raise TypeError("Expecting %s got %s" % (str(self._args[i]), str(type(args[i]))))
             return f(*args)
         return wrapped_f
@@ -45,5 +46,5 @@ def sort(word_freq):
 
 word_freqs = sort(frequencies(extract_words(sys.argv[1])))
 for (w, c) in word_freqs[0:25]:
-    print w, ' - ', c
+    print(w, ' - ', c)
 
