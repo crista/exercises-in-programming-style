@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 
 class DataStorageManager():
@@ -64,7 +63,7 @@ class WordFrequencyManager():
             self._word_freqs[word] = 1
 
     def _sorted(self):
-        return sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        return sorted(self._word_freqs.items(), key=operator.itemgetter(1), reverse=True)
 
 class WordFrequencyController():
 

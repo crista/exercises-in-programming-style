@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 
 # Auxiliary functions that can't be lambdas
@@ -35,7 +34,7 @@ stop_words_obj = {
 word_freqs_obj = {
     'freqs' : {},
     'increment_count' : lambda w : increment_count(word_freqs_obj, w),
-    'sorted' : lambda : sorted(word_freqs_obj['freqs'].iteritems(), key=operator.itemgetter(1), reverse=True)
+    'sorted' : lambda : sorted(word_freqs_obj['freqs'].items(), key=operator.itemgetter(1), reverse=True)
 }
 
 data_storage_obj['init'](sys.argv[1])

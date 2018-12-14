@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, collections
 
 class WordFrequenciesModel:
@@ -23,7 +22,7 @@ class WordFrequenciesView:
         self._model = model
 
     def render(self):
-        sorted_freqs = sorted(self._model.freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        sorted_freqs = sorted(self._model.freqs.items(), key=operator.itemgetter(1), reverse=True)
         for (w, c) in sorted_freqs[0:25]:
             print(w, '-', c)
 

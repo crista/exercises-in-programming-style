@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, operator, string, os, threading, re
 from util import getch, cls, get_input
 from time import sleep
@@ -15,7 +14,7 @@ class FreqObserver(threading.Thread):
         self.daemon,self._end = True, False
         # freqs is the part of the model to be observed
         self._freqs = freqs
-        self._freqs_0 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]
+        self._freqs_0 = sorted(self._freqs.items(), key=operator.itemgetter(1), reverse=True)[:25]
         self.start()
 
     def run(self):
@@ -29,7 +28,7 @@ class FreqObserver(threading.Thread):
 
     def _update_view(self):
         lock.acquire()
-        freqs_1 = sorted(self._freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25]
+        freqs_1 = sorted(self._freqs.items(), key=operator.itemgetter(1), reverse=True)[:25]
         lock.release()
         if (freqs_1 != self._freqs_0):
             self._update_display(freqs_1)

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 from functools import reduce
 
@@ -51,12 +50,13 @@ def count_words(pairs_list_1, pairs_list_2):
     and returns a list of pairs [(w1, frequency), ...],
     where frequency is the sum of all the reported occurrences
     """
-    mapping = dict((k, v) for k, v in pairs_list_1)
-    for p in pairs_list_2:
-        if p[0] in mapping:
-            mapping[p[0]] += p[1]
-        else:
-            mapping[p[0]] = 1
+    mapping = {}
+    for pl in [pairs_list_1, pairs_list_2]:
+        for p in pl:
+            if p[0] in mapping:
+                mapping[p[0]] += p[1]
+            else:
+                mapping[p[0]] = p[1]
     return mapping.items()
 
 #
@@ -74,7 +74,6 @@ def sort(word_freq):
 # The main function
 #
 splits = map(split_words, partition(read_file(sys.argv[1]), 200))
-splits.insert(0, []) # Normalize input to reduce
 word_freqs = sort(reduce(count_words, splits))
 
 for (w, c) in word_freqs[0:25]:

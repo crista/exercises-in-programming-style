@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string, time
 
 #
@@ -25,7 +24,7 @@ def frequencies(word_list):
     return word_freqs
 
 def sort(word_freq):
-    return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted(word_freq.items(), key=operator.itemgetter(1), reverse=True)
 
 # The side functionality
 def profile(f):

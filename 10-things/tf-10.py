@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 from abc import ABCMeta
 
@@ -56,7 +55,7 @@ class WordFrequencyManager(TFExercise):
             self._word_freqs[word] = 1
 
     def sorted(self):
-        return sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        return sorted(self._word_freqs.items(), key=operator.itemgetter(1), reverse=True)
 
     def info(self):
         return super(WordFrequencyManager, self).info() + ": My major data structure is a " + self._word_freqs.__class__.__name__

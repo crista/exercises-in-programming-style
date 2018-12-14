@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import re, string, sys
 
 stops = set(open("../stop_words.txt").read().split(",") + list(string.ascii_lowercase))

@@ -4,7 +4,6 @@
 #   Author: Chris Meyers @
 #           http://openbookproject.net/py4fun/forth/forth.html
 #
-from __future__ import print_function
 import re
 
 try:

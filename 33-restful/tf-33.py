@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import re, string, sys
 
 with open("../stop_words.txt") as f:
@@ -32,9 +31,8 @@ def upload_post_handler(args):
         with open(filename) as f:
             for w in [x.lower() for x in re.split("[^a-zA-Z]+", f.read()) if len(x) > 0 and x.lower() not in stops]:
                 word_freqs[w] = word_freqs.get(w, 0) + 1
-        word_freqsl = word_freqs.items()
-        word_freqsl.sort(key=lambda x: x[1], reverse=True)
-        data[filename] = word_freqsl
+        word_freqsl = list(word_freqs.items())
+        data[filename] = sorted(word_freqsl, key=lambda x: x[1], reverse=True)
 
     if args == None:
         return error_state()
@@ -42,6 +40,7 @@ def upload_post_handler(args):
     try:
         create_data(filename)
     except:
+        print("Unexpected error: %s" % sys.exc_info()[0])
         return error_state()
     return word_get_handler([filename, 0])
 

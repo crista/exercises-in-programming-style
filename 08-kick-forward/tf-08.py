@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -37,7 +36,7 @@ def frequencies(word_list, func):
     func(wf, print_text)
 
 def sort(wf, func):
-    func(sorted(wf.iteritems(), key=operator.itemgetter(1), reverse=True), no_op)
+    func(sorted(wf.items(), key=operator.itemgetter(1), reverse=True), no_op)
 
 def print_text(word_freqs, func):
     for (w, c) in word_freqs[0:25]:

@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # My golf score is slightly lower!  
 # Best wishes, Peter Norvig
-
-from __future__ import print_function
 import re, sys, collections
 
 stopwords = set(open('../stop_words.txt').read().split(','))

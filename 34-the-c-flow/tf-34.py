@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-from __future__ import print_function
 import sys, re, operator, string, inspect
 
 # Reusing the defensive style program to illustrate this
@@ -63,7 +61,7 @@ def sort(word_freq):
     sorted by frequency 
     """
     if type(word_freq) is dict and word_freq != {}:
-        return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+        return sorted(word_freq.items(), key=operator.itemgetter(1), reverse=True)
     else:
         return []
 

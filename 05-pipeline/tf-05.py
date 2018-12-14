@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -59,7 +58,7 @@ def sort(word_freq):
     and returns a list of pairs where the entries are
     sorted by frequency 
     """
-    return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted(word_freq.items(), key=operator.itemgetter(1), reverse=True)
 
 def print_all(word_freqs):
     """

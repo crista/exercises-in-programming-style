@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string, inspect
 
 #
@@ -50,7 +49,7 @@ def sort(word_freq):
     if type(word_freq) is not dict or word_freq == {}:
         return []
 
-    return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted(word_freq.items(), key=operator.itemgetter(1), reverse=True)
 
 #
 # The main function

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -92,7 +91,7 @@ def frequencies():
 
 def sort():
     # Not in style, left as exercise
-    stack.extend(sorted(stack.pop().iteritems(), key=operator.itemgetter(1)))
+    stack.extend(sorted(stack.pop().items(), key=operator.itemgetter(1)))
 
 # The main function
 #

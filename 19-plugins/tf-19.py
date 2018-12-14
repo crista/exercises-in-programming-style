@@ -1,15 +1,16 @@
 #!/usr/bin/env python
-from __future__ import print_function
-import sys, ConfigParser, imp
+import sys, configparser, importlib.machinery
 
 def load_plugins():
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read("config.ini")
     words_plugin = config.get("Plugins", "words")
     frequencies_plugin = config.get("Plugins", "frequencies")
     global tfwords, tffreqs
-    tfwords = imp.load_compiled('tfwords', words_plugin)
-    tffreqs = imp.load_compiled('tffreqs', frequencies_plugin)
+#    tfwords = importlib.load_compiled('tfwords', words_plugin)
+#    tffreqs = importlib.load_compiled('tffreqs', frequencies_plugin)
+    tfwords = importlib.machinery.SourcelessFileLoader('tfwords', words_plugin).load_module()
+    tffreqs = importlib.machinery.SourcelessFileLoader('tffreqs', frequencies_plugin).load_module()
 
 load_plugins()
 word_freqs = tffreqs.top25(tfwords.extract_words(sys.argv[1]))

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string, inspect
 
 def read_stop_words():
@@ -35,7 +34,7 @@ def frequencies(word_list):
 
 def sort(word_freq):
     # Meta-level data: locals()
-    return sorted(locals()['word_freq'].iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted(locals()['word_freq'].items(), key=operator.itemgetter(1), reverse=True)
 
 def main():
     word_freqs = sort(frequencies(extract_words(sys.argv[1])))

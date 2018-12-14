@@ -1,9 +1,8 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import re, sys, operator
 
 # Mileage may vary. If this crashes, make it lower
-RECURSION_LIMIT = 9500
+RECURSION_LIMIT = 5000
 # We add a few more, because, contrary to the name,
 # this doesn't just rule recursion: it rules the 
 # depth of the call stack
@@ -35,11 +34,12 @@ def wf_print(wordfreq):
 
 stop_words = set(open('../stop_words.txt').read().split(','))
 words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
+
 word_freqs = {}
 # Theoretically, we would just call count(words, stop_words, word_freqs)
 # Try doing that and see what happens.
 for i in range(0, len(words), RECURSION_LIMIT):
     count(words[i:i+RECURSION_LIMIT], stop_words, word_freqs)
 
-wf_print(sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)[:25])
+wf_print(sorted(word_freqs.items(), key=operator.itemgetter(1), reverse=True)[:25])
 

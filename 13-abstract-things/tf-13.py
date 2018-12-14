@@ -1,31 +1,27 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import abc, sys, re, operator, string
 
 #
 # The abstract things
 #
-class IDataStorage (object):
+class IDataStorage (metaclass=abc.ABCMeta):
     """ Models the contents of the file """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def words(self):
         """ Returns the words in storage """
         pass
 
-class IStopWordFilter (object):
+class IStopWordFilter (metaclass=abc.ABCMeta):
     """ Models the stop word filter """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def is_stop_word(self, word):
         """ Checks whether the given word is a stop word """
         pass
 
-class IWordFrequencyCounter(object):
+class IWordFrequencyCounter(metaclass=abc.ABCMeta):
     """ Keeps the word frequency data """
-    __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
     def increment_count(self, word):
@@ -72,15 +68,15 @@ class WordFrequencyManager:
             self._word_freqs[word] = 1
 
     def sorted(self):
-        return sorted(self._word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+        return sorted(self._word_freqs.items(), key=operator.itemgetter(1), reverse=True)
 
 
 #
 # The wiring between abstract things and concrete things
 #
-IDataStorage.register(DataStorageManager)
-IStopWordFilter.register(StopWordManager)
-IWordFrequencyCounter.register(WordFrequencyManager)
+IDataStorage.register(subclass=DataStorageManager)
+IStopWordFilter.register(subclass=StopWordManager)
+IWordFrequencyCounter.register(subclass=WordFrequencyManager)
 
 #
 # The application object

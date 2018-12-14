@@ -1,6 +1,4 @@
 #!/usr/bin/env python
-
-from __future__ import print_function
 import sys, re, operator, string, traceback
 
 #
@@ -51,9 +49,9 @@ def sort(word_freq):
     assert(word_freq != {}), "I need a non-empty dictionary!"
 
     try:
-        return sorted(word_freq.iteritems(), key=operator.itemgetter(1), reverse=True)
+        return sorted(word_freq.items(), key=operator.itemgetter(1), reverse=True)
     except Exception as e:
-        print("Sorted threw {0}: {1}".format(e))
+        print("Sorted threw {0}".format(e))
         raise e
 
 #

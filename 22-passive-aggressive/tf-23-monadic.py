@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from __future__ import print_function
 import sys, re, operator, string
 
 #
@@ -68,7 +67,7 @@ def sort(word_freqs):
     assert(type(word_freqs) is dict), "I need a dictionary! I quit!"
     assert(word_freqs != {}), "I need a non-empty dictionary! I quit!"
 
-    return sorted(word_freqs.iteritems(), key=operator.itemgetter(1), reverse=True)
+    return sorted(word_freqs.items(), key=operator.itemgetter(1), reverse=True)
 
 def top25_freqs(word_freqs):
     assert(type(word_freqs) is list), "I need a list! I quit!"
