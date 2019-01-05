@@ -37,9 +37,7 @@ def load_file_into_database(path_to_file, connection):
     # Add the words to the database
     c.execute("SELECT MAX(id) FROM words")
     row = c.fetchone()
-    word_id = row[0]
-    if word_id == None:
-        word_id = 0
+    word_id = row[0] + 1 if row[0] != None else 0
     for w in words:
         c.execute("INSERT INTO words VALUES (?, ?, ?)", (word_id, doc_id, w))
         # Add the characters to the database
