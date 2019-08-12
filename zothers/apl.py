@@ -34,7 +34,7 @@ words = [characters[w_ranges[i][0] : w_ranges[i][1]] for i in range(len(w_ranges
 # Result: [array([' ', 'h', 'e', 'l', 'l', 'o'], dtype='<U1'), 
 #          array([' ', 'w', 'o', 'r', 'l', 'd'], dtype='<U1')]
 
-# But this way too much! Let's reduce rows of characters to strings
+# But this is too much! Let's recode the characters as strings
 swords = np.array([''.join(row).strip() for row in words])
 # Result: array(['hello', 'world'], dtype='<U5')
 
