@@ -12,27 +12,27 @@ characters = np.char.lower(characters)
 # Result: array([' ', 'h', 'e', 'l', 'l', 'o', ' ', ' ', 
 #           'w', 'o', 'r', 'l', 'd', ' ', ' '], dtype='<U1')
 
-### Split the words, by finding the indices of spaces
+### Split the words by finding the indices of spaces
 sp = np.where(characters == ' ')
 # Result: (array([ 0, 6, 7, 13, 14], dtype=int64),)
-
 # A little trick: let's double each index, and then take pairs
 sp2 = np.repeat(sp, 2)
 # Result: array([ 0, 0, 6, 6, 7, 7, 13, 13, 14, 14], dtype=int64)
-
 # Get the pairs as a 2D matrix, skip the first and the last
 w_ranges = np.reshape(sp2[1:-1], (-1, 2))
 # Result: array([[ 0,  6],
 #                [ 6,  7],
 #                [ 7, 13],
 #                [13, 14]], dtype=int64)
+# Remove the indexing to the spaces themselves
+w_ranges = w_ranges[np.where(w_ranges[:, 1] - w_ranges[:, 0] > 1)]
+# Result: array([[ 0,  6],
+#                [ 7, 13]], dtype=int64)
 
 # Voila! Words are in between spaces, given as pairs of indices
-# But skip contiguous spaces (the conditional at the end)
-words = [characters[w_ranges[i][0] : w_ranges[i][1]] for i in range(len(w_ranges)) if w_ranges[i][1]-w_ranges[i][0] > 1]
+words = [characters[w_ranges[i][0] : w_ranges[i][1]] for i in range(len(w_ranges))]
 # Result: [array([' ', 'h', 'e', 'l', 'l', 'o'], dtype='<U1'), 
 #          array([' ', 'w', 'o', 'r', 'l', 'd'], dtype='<U1')]
-
 # Let's recode the characters as strings
 swords = np.array([''.join(row).strip() for row in words])
 # Result: array(['hello', 'world'], dtype='<U5')
