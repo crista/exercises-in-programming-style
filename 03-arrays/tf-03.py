@@ -30,11 +30,11 @@ w_ranges = w_ranges[np.where(w_ranges[:, 1] - w_ranges[:, 0] > 1)]
 #                [ 7, 13]], dtype=int64)
 
 # Voila! Words are in between spaces, given as pairs of indices
-words = [characters[w_ranges[i][0] : w_ranges[i][1]] for i in range(len(w_ranges))]
+words = list(map(lambda r: characters[r[0]:r[1]], w_ranges))
 # Result: [array([' ', 'h', 'e', 'l', 'l', 'o'], dtype='<U1'), 
 #          array([' ', 'w', 'o', 'r', 'l', 'd'], dtype='<U1')]
 # Let's recode the characters as strings
-swords = np.array([''.join(row).strip() for row in words])
+swords = np.array(list(map(lambda w: ''.join(w).strip(), words)))
 # Result: array(['hello', 'world'], dtype='<U5')
 
 # Next, let's remove stop words
