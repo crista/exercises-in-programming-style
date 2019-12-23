@@ -58,5 +58,5 @@ filename = sys.argv[1] if len(sys.argv) > 1 else "../input.txt"
 word_freqs = sort(frequencies(remove_stop_words(extract_words(filename))))
 
 for tf in word_freqs[0:25]:
-    print(tf[0], ' - ', tf[1])
+    print(tf[0], '-', tf[1])
 

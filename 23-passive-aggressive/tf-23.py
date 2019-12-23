@@ -50,7 +50,7 @@ try:
 
     assert(len(word_freqs) > 25), "OMG! Less than 25 words! I QUIT!"
     for tf in word_freqs[0:25]:
-        print(tf[0], ' - ', tf[1])
+        print(tf[0], '-', tf[1])
 except Exception as e:
         print("Something wrong: {0}".format(e))
 

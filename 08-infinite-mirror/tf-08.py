@@ -34,7 +34,6 @@ def wf_print(wordfreq):
 
 stop_words = set(open('../stop_words.txt').read().split(','))
 words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
-
 word_freqs = {}
 # Theoretically, we would just call count(words, stop_words, word_freqs)
 # Try doing that and see what happens.

@@ -1,10 +1,10 @@
 import sys, string
 import numpy as np
 
-# Example input: "Hello  World!!" 
+# Example input: "Hello  World!" 
 characters = np.array([' ']+list(open(sys.argv[1]).read())+[' '])
 # Result: array([' ', 'H', 'e', 'l', 'l', 'o', ' ', ' ', 
-#           'W', 'o', 'r', 'l', 'd', '!', '!', ' '], dtype='<U1')
+#           'W', 'o', 'r', 'l', 'd', '!', ' '], dtype='<U1')
 
 # Normalize
 characters[~np.char.isalpha(characters)] = ' '
@@ -25,7 +25,7 @@ w_ranges = np.reshape(sp2[1:-1], (-1, 2))
 #                [ 7, 13],
 #                [13, 14]], dtype=int64)
 # Remove the indexing to the spaces themselves
-w_ranges = w_ranges[np.where(w_ranges[:, 1] - w_ranges[:, 0] > 1)]
+w_ranges = w_ranges[np.where(w_ranges[:, 1] - w_ranges[:, 0] > 2)]
 # Result: array([[ 0,  6],
 #                [ 7, 13]], dtype=int64)
 
@@ -38,9 +38,7 @@ swords = np.array(list(map(lambda w: ''.join(w).strip(), words)))
 # Result: array(['hello', 'world'], dtype='<U5')
 
 # Next, let's remove stop words
-stop_words = open('../stop_words.txt').read().split(',')
-stop_words.extend(list(string.ascii_lowercase))
-stop_words = np.array(list(set(stop_words)))
+stop_words = np.array(list(set(open('../stop_words.txt').read().split(','))))
 ns_words = swords[~np.isin(swords, stop_words)]
 
 ### Finally, count the word occurrences

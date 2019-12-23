@@ -46,4 +46,4 @@ for w in data_storage_obj['words']():
 
 word_freqs = word_freqs_obj['sorted']()
 for (w, c) in word_freqs[0:25]:
-    print(w, ' - ', c)
+    print(w, '-', c)

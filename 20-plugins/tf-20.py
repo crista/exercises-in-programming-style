@@ -7,8 +7,6 @@ def load_plugins():
     words_plugin = config.get("Plugins", "words")
     frequencies_plugin = config.get("Plugins", "frequencies")
     global tfwords, tffreqs
-#    tfwords = importlib.load_compiled('tfwords', words_plugin)
-#    tffreqs = importlib.load_compiled('tffreqs', frequencies_plugin)
     tfwords = importlib.machinery.SourcelessFileLoader('tfwords', words_plugin).load_module()
     tffreqs = importlib.machinery.SourcelessFileLoader('tffreqs', frequencies_plugin).load_module()
 
@@ -16,5 +14,5 @@ load_plugins()
 word_freqs = tffreqs.top25(tfwords.extract_words(sys.argv[1]))
 
 for (w, c) in word_freqs:
-    print(w, ' - ', c)
+    print(w, '-', c)
 

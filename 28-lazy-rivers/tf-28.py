@@ -44,5 +44,5 @@ def count_and_sort(filename):
 for word_freqs in count_and_sort(sys.argv[1]):
     print("-----------------------------")
     for (w, c) in word_freqs[0:25]:
-        print(w, ' - ', c)
+        print(w, '-', c)
 

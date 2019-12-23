@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import sys, re, operator, string, traceback
 
 #
@@ -64,7 +65,7 @@ try:
     assert(type(word_freqs) is list), "OMG! This is not a list!"
     assert(len(word_freqs) > 25), "SRSLY? Less than 25 words!"
     for (w, c) in word_freqs[0:25]:
-        print(w, ' - ', c)
+        print(w, '-', c)
 except Exception as e:
     print("Something wrong: {0}".format(e))
     traceback.print_exc()

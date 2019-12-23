@@ -38,6 +38,7 @@ def update():
         if c[1] != None:
             c[0] = c[1]() 
 
+
 # Load the fixed data into the first 2 columns
 all_words[0] = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
 stop_words[0] = set(open('../stop_words.txt').read().split(','))

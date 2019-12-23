@@ -66,4 +66,4 @@ with sqlite3.connect('tf.db') as connection:
     for i in range(25):
         row = c.fetchone()
         if row != None:
-            print(row[0] + ' - '  + str(row[1]))
+            print(row[0], '-', str(row[1]))

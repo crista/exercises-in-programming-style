@@ -89,7 +89,7 @@ class WordFrequencyCounter:
     def __print_freqs(self):
         word_freqs = sorted(self._word_freqs.items(), key=operator.itemgetter(1), reverse=True)
         for (w, c) in word_freqs[0:25]:
-            print(w, ' - ', c)
+            print(w, '-', c)
 
 #
 # The main function

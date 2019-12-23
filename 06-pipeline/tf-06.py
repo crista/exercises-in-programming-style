@@ -65,7 +65,7 @@ def print_all(word_freqs):
     Takes a list of pairs where the entries are sorted by frequency and print them recursively.
     """
     if(len(word_freqs) > 0):
-        print(word_freqs[0][0], ' - ', word_freqs[0][1])
+        print(word_freqs[0][0], '-', word_freqs[0][1])
         print_all(word_freqs[1:]);
 
 #

@@ -45,5 +45,5 @@ for func in tracked_functions:
 word_freqs = sort(frequencies(extract_words(sys.argv[1])))
 
 for (w, c) in word_freqs[0:25]:
-    print(w, ' - ', c)
+    print(w, '-', c)
 
