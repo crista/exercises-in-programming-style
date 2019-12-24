@@ -24,15 +24,15 @@ def upload_get_handler(args):
     return "Name of file to upload?", ["post", "file"]
 
 def upload_post_handler(args):
-    def create_data(filename):
-        if filename in data:
+    def create_data(fn):
+        if fn in data:
             return
         word_freqs = {}
-        with open(filename) as f:
+        with open(fn) as f:
             for w in [x.lower() for x in re.split("[^a-zA-Z]+", f.read()) if len(x) > 0 and x.lower() not in stops]:
                 word_freqs[w] = word_freqs.get(w, 0) + 1
-        word_freqsl = list(word_freqs.items())
-        data[filename] = sorted(word_freqsl, key=lambda x: x[1], reverse=True)
+        wf = list(word_freqs.items())
+        data[fn] = sorted(wf,key=lambda x: x[1],reverse=True)
 
     if args == None:
         return error_state()
