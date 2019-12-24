@@ -1,13 +1,6 @@
 #!/usr/bin/env python
 import sys, re, operator, string
 from functools import reduce
-
-try:
-    xrange          # Python 2
-except NameError:
-    xrange = range  # Python 3
-
-
 #
 # Functions for map reduce
 #
@@ -17,7 +10,7 @@ def partition(data_str, nlines):
     into chunks of nlines.
     """
     lines = data_str.split('\n')
-    for i in xrange(0, len(lines), nlines):
+    for i in range(0, len(lines), nlines):
         yield '\n'.join(lines[i:i+nlines])
 
 def split_words(data_str):
@@ -94,4 +87,4 @@ splits_per_word = regroup(splits)
 word_freqs = sort(map(count_words, splits_per_word.items()))
 
 for (w, c) in word_freqs[0:25]:
-    print(w, ' - ', c)
+    print(w, '-', c)
