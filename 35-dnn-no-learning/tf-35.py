@@ -34,8 +34,8 @@ def decode_one_hot(x):
     s = []
     for onehot in x:
         one_index = np.where(onehot == 1) # one_index is a tuple of two things
-        if len(one_index[1]) > 0:
-            n = one_index[1][0]
+        if len(one_index[0]) > 0:
+            n = one_index[0][0]
             c = indices_char[n]
             s.append(c) 
     return ''.join(s)
@@ -119,7 +119,7 @@ def build_model():
     # Find the space characters
     words_output = layers.Lambda(SpaceDetector)(reshaped_output)
 
-    model = Model(inputs=raw_inputs, outputs=normalized_outputs)
+    model = Model(inputs=raw_inputs, outputs=words_output)
 
     return model
 
