@@ -1,6 +1,5 @@
 from keras.models import Sequential
 from keras.layers import Dense
-from keras.utils import plot_model
 import numpy as np
 import sys, os, string
 
@@ -9,7 +8,6 @@ char_indices = dict((c, i) for i, c in enumerate(characters))
 indices_char = dict((i, c) for i, c in enumerate(characters))
 
 INPUT_VOCAB_SIZE = len(characters)
-LINE_SIZE = 100
 
 def encode_one_hot(line):
     x = np.zeros((len(line), INPUT_VOCAB_SIZE))
@@ -55,12 +53,14 @@ def normalization_layer_set_weights(n_layer):
 def build_model():
     # Normalize characters using a dense layer
     model = Sequential()
-    dense_layer = Dense(INPUT_VOCAB_SIZE, input_shape=(INPUT_VOCAB_SIZE,))
+    dense_layer = Dense(INPUT_VOCAB_SIZE, 
+                        input_shape=(INPUT_VOCAB_SIZE,))
     model.add(dense_layer)
     normalization_layer_set_weights(dense_layer)
     return model
 
 model = build_model()
+model.summary()
 
 with open(sys.argv[1]) as f:
     for line in f:
