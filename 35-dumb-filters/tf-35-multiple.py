@@ -5,7 +5,7 @@ from keras.utils import plot_model
 import numpy as np
 import sys, os, string
 
-characters = sorted(string.printable)
+characters = string.printable
 char_indices = dict((c, i) for i, c in enumerate(characters))
 indices_char = dict((i, c) for i, c in enumerate(characters))
 
@@ -73,7 +73,6 @@ def build_model():
     return model
 
 model = build_model()
-plot_model(model, to_file='normalization.png', show_shapes=True)
 
 with open(sys.argv[1]) as f:
     for line in f:
