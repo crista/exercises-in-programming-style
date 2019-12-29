@@ -54,13 +54,14 @@ def build_model():
     # Normalize characters using a dense layer
     model = Sequential()
     dense_layer = Dense(INPUT_VOCAB_SIZE, 
-                        input_shape=(INPUT_VOCAB_SIZE,))
+                        input_shape=(INPUT_VOCAB_SIZE,),
+                        activation='softmax')
     model.add(dense_layer)
-    normalization_layer_set_weights(dense_layer)
     return model
 
 model = build_model()
 model.summary()
+normalization_layer_set_weights(model.layers[0])
 
 with open(sys.argv[1]) as f:
     for line in f:
