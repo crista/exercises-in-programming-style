@@ -1,9 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, LSTM, RepeatVector, TimeDistributed
-from keras.losses import binary_crossentropy, categorical_crossentropy
-from keras.optimizers import SGD
-from keras. metrics import top_k_categorical_accuracy
-from keras import backend as K
+from keras.layers import Dense, LSTM
 import numpy as np
 import sys, os, string, random
 
@@ -14,13 +10,9 @@ indices_char = dict((i, c) for i, c in enumerate(characters))
 INPUT_VOCAB_SIZE = len(characters)
 BATCH_SIZE = 200
 HIDDEN_SIZE = 100
-N_LAYERS = 1
 TIME_STEPS = 3
 
 def encode_one_hot(line):
-#    remain = len(line) % TIME_STEPS
-#    if remain != 0:
-#        line = line + ' ' * (TIME_STEPS-remain)
     line = " " + line
     x = np.zeros((len(line), INPUT_VOCAB_SIZE))
     for i, c in enumerate(line):
@@ -40,8 +32,6 @@ def prepare_for_rnn(x):
     ind = [np.array(np.arange(i, i+TIME_STEPS)) for i in range(x.shape[0] - TIME_STEPS + 1)]
     ind = np.array(ind, dtype=np.int32)
     x_rnn = x[ind]
-#    np.append(x_rnn, np.zeros((TIME_STEPS, INPUT_VOCAB_SIZE)), axis=0)
-#    np.append(x_rnn, np.zeros((TIME_STEPS, INPUT_VOCAB_SIZE)), axis=0)
     return x_rnn
 
 def input_generator(nsamples):
@@ -63,8 +53,6 @@ def input_generator(nsamples):
 
     while True:
         input_data, expected = generate_line()
-        #print("Input :", input_data)
-        #print("Output:", expected)
         data_in = encode_one_hot(input_data)
         data_out = encode_one_hot(expected)
         yield prepare_for_rnn(data_in), data_out
@@ -83,12 +71,7 @@ def train(model):
 
 def build_model():
     model = Sequential()
-    r_layer = LSTM(HIDDEN_SIZE, input_shape=(None, INPUT_VOCAB_SIZE))
-    model.add(r_layer)
-#    model.add(RepeatVector(TIME_STEPS))
-#    for _ in range(N_LAYERS):
-#        model.add(LSTM(HIDDEN_SIZE, return_sequences=True))
-#    model.add(TimeDistributed(Dense(INPUT_VOCAB_SIZE, activation='softmax')))
+    model.add(LSTM(HIDDEN_SIZE, input_shape=(None, INPUT_VOCAB_SIZE)))
     model.add(Dense(INPUT_VOCAB_SIZE, activation='softmax'))
     return model
 
