@@ -21,6 +21,7 @@ def encode_one_hot(line):
 #    remain = len(line) % TIME_STEPS
 #    if remain != 0:
 #        line = line + ' ' * (TIME_STEPS-remain)
+    line = " " + line
     x = np.zeros((len(line), INPUT_VOCAB_SIZE))
     for i, c in enumerate(line):
         index = char_indices[c] if c in characters else char_indices[' ']
@@ -50,7 +51,7 @@ def input_generator(nsamples):
             c = random.choice(characters) 
             expected = c.lower() if c in string.ascii_letters else ' ' 
             inline.append(c); outline.append(expected)
-        inline.append(' ')
+        inline.append(' '); 
         for i in range(nsamples):
             if outline[i] == ' ': continue
             if i > 0 and i < nsamples-1:
