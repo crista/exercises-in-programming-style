@@ -1,5 +1,5 @@
 from keras.models import Sequential
-from keras.layers import Dense, LSTM
+from keras.layers import Dense, SimpleRNN
 import numpy as np
 import sys, os, string, random
 
@@ -71,7 +71,7 @@ def train(model):
 
 def build_model():
     model = Sequential()
-    model.add(LSTM(HIDDEN_SIZE, input_shape=(None, INPUT_VOCAB_SIZE)))
+    model.add(SimpleRNN(HIDDEN_SIZE, input_shape=(None, INPUT_VOCAB_SIZE)))
     model.add(Dense(INPUT_VOCAB_SIZE, activation='softmax'))
     return model
 
