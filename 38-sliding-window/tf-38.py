@@ -11,7 +11,7 @@ INPUT_VOCAB_SIZE = len(characters)
 WINDOW_SIZE = 3
 
 def encode_one_hot(line):
-    line = " " + line
+    line = " " + line + " "
     x = np.zeros((len(line), INPUT_VOCAB_SIZE))
     for i, c in enumerate(line):
         index = char_indices[c] if c in characters else char_indices[' ']
@@ -35,8 +35,8 @@ def prepare_for_window(x):
     
 def normalization_layer_set_weights(n_layer):
     wb = []
-    w = np.zeros((WINDOW_SIZE*INPUT_VOCAB_SIZE, INPUT_VOCAB_SIZE), dtype=np.float32)
-    b = np.zeros((INPUT_VOCAB_SIZE), dtype=np.float32)
+    w = np.zeros((WINDOW_SIZE*INPUT_VOCAB_SIZE, INPUT_VOCAB_SIZE))
+    b = np.zeros((INPUT_VOCAB_SIZE))
     # Let lower case letters go through
     for c in string.ascii_lowercase:
         i = char_indices[c]
@@ -48,11 +48,12 @@ def normalization_layer_set_weights(n_layer):
         w[INPUT_VOCAB_SIZE+i, il] = 1
     # Map all non-letters to space
     sp_idx = char_indices[' ']
-    for c in [c for c in list(string.printable) if c not in list(string.ascii_letters)]:
+    non_letters = [c for c in list(characters) if c not in list(string.ascii_letters)]
+    for c in non_letters:
         i = char_indices[c]
         w[INPUT_VOCAB_SIZE+i, sp_idx] = 1
     # Map single letters to space
-    for c in [c for c in list(string.printable) if c not in list(string.ascii_letters)]:
+    for c in non_letters:
         i = char_indices[c]
         w[i, sp_idx] = 0.75
         w[INPUT_VOCAB_SIZE*2+i, sp_idx] = 0.75
@@ -66,8 +67,8 @@ def build_model():
     # Normalize characters using a dense layer
     model = Sequential()
     dense_layer = Dense(INPUT_VOCAB_SIZE, 
-                        input_shape=(WINDOW_SIZE*INPUT_VOCAB_SIZE,),
-                        activation='softmax')
+                    input_shape=(WINDOW_SIZE*INPUT_VOCAB_SIZE,),
+                    activation='softmax')
     model.add(dense_layer)
     return model
 

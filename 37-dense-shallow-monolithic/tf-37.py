@@ -31,8 +31,8 @@ def decode_one_hot(y):
     
 def normalization_layer_set_weights(n_layer):
     wb = []
-    w = np.zeros((LINE_SIZE*INPUT_VOCAB_SIZE, LINE_SIZE*INPUT_VOCAB_SIZE), dtype=np.float32)
-    b = np.zeros((LINE_SIZE*INPUT_VOCAB_SIZE), dtype=np.float32)
+    w = np.zeros((LINE_SIZE*INPUT_VOCAB_SIZE, LINE_SIZE*INPUT_VOCAB_SIZE))
+    b = np.zeros((LINE_SIZE*INPUT_VOCAB_SIZE))
     for r in range(0, LINE_SIZE*INPUT_VOCAB_SIZE, INPUT_VOCAB_SIZE):
         # Let lower case letters go through
         for c in string.ascii_lowercase:
