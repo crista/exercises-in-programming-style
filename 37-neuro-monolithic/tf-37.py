@@ -69,10 +69,9 @@ def normalization_layer_set_weights(n_layer):
 def build_model():
     # Normalize characters using a dense layer
     model = Sequential()
-    dense_layer = Dense(LINE_SIZE*INPUT_VOCAB_SIZE, 
-                        input_shape=(LINE_SIZE*INPUT_VOCAB_SIZE,),
-                        activation='softmax')
-    model.add(dense_layer)
+    model.add(Dense(LINE_SIZE*INPUT_VOCAB_SIZE, 
+                    input_shape=(LINE_SIZE*INPUT_VOCAB_SIZE,),
+                    activation='sigmoid'))
     return model
 
 model = build_model()
