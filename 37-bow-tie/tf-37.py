@@ -65,9 +65,6 @@ def layer1_set_weights(n_layer):
     n_layer.set_weights(wb)
     return n_layer
 
-def negative(x):
-    return K.tf.negative(x)
-
 def build_model():
     model = Sequential()
     model.add(Dense(1, input_shape=(INPUT_VOCAB_SIZE,)))
