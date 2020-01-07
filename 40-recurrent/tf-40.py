@@ -13,7 +13,6 @@ HIDDEN_SIZE = 100
 TIME_STEPS = 3
 
 def encode_one_hot(line):
-    line = " " + line
     x = np.zeros((len(line), INPUT_VOCAB_SIZE))
     for i, c in enumerate(line):
         index = char_indices[c] if c in characters else char_indices[' ']
