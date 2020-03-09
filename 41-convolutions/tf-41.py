@@ -1,8 +1,23 @@
 from keras.models import Sequential, Model
-from keras import layers, metrics
+from keras.layers import Conv2D, ReLU, Lambda, Reshape
 from keras import backend as K
 import numpy as np
 import string, re, collections, os, sys, operator, math
+
+stopwords = set(open('../stop_words.txt').read().split(','))
+all_words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
+words = [w for w in all_words if w not in stopwords]
+
+uniqs = [''] + list(set(words))
+uniqs_indices = dict((w, i) for i, w in enumerate(uniqs))
+indices_uniqs = dict((i, w) for i, w in enumerate(uniqs))
+
+indices = [uniqs_indices[w] for w in words]
+
+WORDS_SIZE = len(words)
+VOCAB_SIZE = len(uniqs)
+BIN_SIZE = math.ceil(math.log(VOCAB_SIZE, 2))
+print(f'Words size {WORDS_SIZE}, vocab size {VOCAB_SIZE}, bin size {BIN_SIZE}')
 
 def encode_binary(W):
     x = np.zeros((1, WORDS_SIZE, BIN_SIZE, 1))
@@ -35,27 +50,12 @@ def SumPooling2D(x):
 
 def build_model():
     model = Sequential()
-    model.add(layers.Conv2D(VOCAB_SIZE, (1, BIN_SIZE),  input_shape=(WORDS_SIZE, BIN_SIZE, 1)))
-    model.add(layers.ReLU(threshold=1-1/BIN_SIZE))
-    model.add(layers.Lambda(SumPooling2D))
-    model.add(layers.Reshape((VOCAB_SIZE,)))
+    model.add(Conv2D(VOCAB_SIZE, (1, BIN_SIZE),  input_shape=(WORDS_SIZE, BIN_SIZE, 1)))
+    model.add(ReLU(threshold=1-1/BIN_SIZE))
+    model.add(Lambda(SumPooling2D))
+    model.add(Reshape((VOCAB_SIZE,)))
 
     return model
-
-stopwords = set(open('../stop_words.txt').read().split(','))
-all_words = re.findall('[a-z]{2,}', open(sys.argv[1]).read().lower())
-words = [w for w in all_words if w not in stopwords]
-
-uniqs = [''] + list(set(words))
-uniqs_indices = dict((w, i) for i, w in enumerate(uniqs))
-indices_uniqs = dict((i, w) for i, w in enumerate(uniqs))
-
-indices = [uniqs_indices[w] for w in words]
-
-WORDS_SIZE = len(words)
-VOCAB_SIZE = len(uniqs)
-BIN_SIZE = math.ceil(math.log(VOCAB_SIZE, 2))
-print(f'Words size {WORDS_SIZE}, vocab size {VOCAB_SIZE}, bin size {BIN_SIZE}')
 
 model = build_model()
 model.summary()
