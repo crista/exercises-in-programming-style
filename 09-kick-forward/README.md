@@ -1,4 +1,4 @@
-Style #8
+Style #9
 ==============================
 
 Variation of the candy factory style, with the following additional constraints:
