@@ -95,7 +95,7 @@ f.close()
 word_freqs.flush()
 
 # PART 2
-# Now we need to find the 25 most frequently occuring words.
+# Now we need to find the 25 most frequently occurring words.
 # We don't need anything from the previous values in memory
 del data[:]
 
