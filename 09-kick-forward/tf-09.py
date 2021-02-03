@@ -21,7 +21,7 @@ def scan(str_data, func):
 
 def remove_stop_words(word_list, func):
     with open('../stop_words.txt') as f:
-        stop_words = f.read().split(',')
+        stop_words = f.read().strip('\n').split(',')
     # add single-letter words
     stop_words.extend(list(string.ascii_lowercase))
     func([w for w in word_list if not w in stop_words], sort)
