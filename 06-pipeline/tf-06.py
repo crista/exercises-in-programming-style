@@ -66,7 +66,7 @@ def print_all(word_freqs):
     """
     if(len(word_freqs) > 0):
         print(word_freqs[0][0], '-', word_freqs[0][1])
-        print_all(word_freqs[1:]);
+        print_all(word_freqs[1:])
 
 #
 # The main function
