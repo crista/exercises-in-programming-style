@@ -29,13 +29,7 @@ Constraints:
 
 - We should apply this concept of code-reuse, but make sure to do so without using inheritance
 
-- In typed languages, using delegates (or `Callable` in Python) is a recommended solution
-
 - Just like in style 11, we will not be calling `info` in the main routine
-
-Note:
-
-A [delegate](https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/delegates/using-delegates?source=recommendations) is a type that safely encapsulates a method, similar to a function pointer in C and C++. Unlike C function pointers, delegates are object-oriented, type safe, and secure
 
 Possible names:
 
