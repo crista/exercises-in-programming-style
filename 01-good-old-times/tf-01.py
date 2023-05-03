@@ -34,7 +34,7 @@ f = open('../stop_words.txt')
 data = [f.read(1024).split(',')] # data[0] holds the stop words
 f.close()
 
-data.append([])    # data[1] is line (max 80 characters)
+data.append(None)    # data[1] is line (max 80 characters)
 data.append(None)  # data[2] is index of the start_char of word
 data.append(0)     # data[3] is index on characters, i = 0
 data.append(False) # data[4] is flag indicating if word was found
@@ -48,15 +48,15 @@ word_freqs = touchopen('word_freqs', 'rb+')
 f = open(sys.argv[1], 'r')
 # Loop over input file's lines
 while True:
-    data[1] = [f.readline()] 
-    if data[1] == ['']: # end of input file
+    data[1] = f.readline()
+    if data[1] == '': # end of input file
         break
-    if data[1][0][len(data[1][0])-1] != '\n': # If it does not end with \n
-        data[1][0] = data[1][0] + '\n' # Add \n
+    if data[1][len(data[1])-1] != '\n': # If it does not end with \n
+        data[1] = data[1] + '\n' # Add \n
     data[2] = None
     data[3] = 0 
     # Loop over characters in the line
-    for c in data[1][0]: # elimination of symbol c is exercise
+    for c in data[1]: # elimination of symbol c is exercise
         if data[2] == None:
             if c.isalnum():
                 # We found the start of a word
@@ -65,7 +65,7 @@ while True:
             if not c.isalnum():
                 # We found the end of a word. Process it
                 data[4] = False 
-                data[5] = data[1][0][data[2]:data[3]].lower()
+                data[5] = data[1][data[2]:data[3]].lower()
                 # Ignore words with len < 2, and stop words
                 if len(data[5]) >= 2 and data[5] not in data[0]:
                     # Let's see if it already exists
