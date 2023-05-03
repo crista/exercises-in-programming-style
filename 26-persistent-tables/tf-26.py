@@ -14,10 +14,11 @@ def create_db_schema(connection):
     c.close()
 
 def load_file_into_database(path_to_file, connection):
-    """ Takes the path to a file and loads the contents into the database """
+    """ Takes the path to a file and loads the contents into the database,
+    then returns the doc_id """
     def _extract_words(path_to_file):
         with open(path_to_file) as f:
-            str_data = f.read()    
+            str_data = f.read()
         pattern = re.compile('[\W_]+')
         word_list = pattern.sub(' ', str_data).lower().split()
         with open('../stop_words.txt') as f:
@@ -50,6 +51,7 @@ def load_file_into_database(path_to_file, connection):
         word_id += 1
     connection.commit()
     c.close()
+    return doc_id
 
 #
 # Create if it doesn't exist
@@ -57,12 +59,24 @@ def load_file_into_database(path_to_file, connection):
 if not os.path.isfile('tf.db'):
     with sqlite3.connect('tf.db') as connection:
         create_db_schema(connection)
-        load_file_into_database(sys.argv[1], connection)
+        load_file_into_database(os.path.abspath(sys.argv[1]), connection)
 
 # Now, let's query
 with sqlite3.connect('tf.db') as connection:
     c = connection.cursor()
-    c.execute("SELECT value, COUNT(*) as C FROM words GROUP BY value ORDER BY C DESC")
+    
+    # Determine if we need to generate new words based on the filename provided
+    c.execute("SELECT id FROM documents WHERE name=?", (os.path.abspath(sys.argv[1]),))
+    row = c.fetchone()
+    if row == None:
+        # document ID didn't exist: create words
+        doc_id = load_file_into_database(os.path.abspath(sys.argv[1]), connection)
+    else:
+        # Get the document ID
+        doc_id = row[0]
+    
+    # Get the cached results from the database based on the filename provided
+    c.execute("SELECT value, COUNT(*) as C FROM words WHERE doc_id=? GROUP BY value ORDER BY C DESC", (doc_id,))
     for i in range(25):
         row = c.fetchone()
         if row != None:
