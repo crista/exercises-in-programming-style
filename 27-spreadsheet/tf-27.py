@@ -11,7 +11,7 @@ non_stop_words = [(), lambda : \
                           list(map(lambda w : \
                             w if w not in stop_words[0] else '',\
                               all_words[0]))]
-unique_words = [(),lambda : 
+unique_words = [(), lambda : 
                     set([w for w in non_stop_words[0] if w!=''])]
 counts = [(), lambda : 
                 list(map(lambda w, word_list : word_list.count(w), \
